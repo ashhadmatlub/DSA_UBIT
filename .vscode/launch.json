@@ -15,8 +15,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/ASHHAD PROGRAMMING/DSA UNI CS-451/Week1/Home",
-      "program": "c:/ASHHAD PROGRAMMING/DSA UNI CS-451/Week1/Home/build/Debug/outDebug",
+      "cwd": "c:/ASHHAD PROGRAMMING/DSA UNI CS-451/Week2/linkedlist",
+      "program": "c:/ASHHAD PROGRAMMING/DSA UNI CS-451/Week2/linkedlist/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
