@@ -103,8 +103,8 @@ void del(int value)
         if (value == cur->data)
         {
             prev->next = cur->next;
-            cout << "Deleted successfully : " << value;
             free(cur);
+            cout << "Deleted successfully : " << value;
             return;
         }
         cur = cur->next;
