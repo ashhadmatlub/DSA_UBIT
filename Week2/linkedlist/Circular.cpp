@@ -13,11 +13,9 @@ struct Node
 Node *list = NULL;
 Node *curr;
 Node *temp;
-int count = 0;
 
 void insert(int value)
 {
-    count++;
     temp = (Node *)malloc(sizeof(Node)); // malloc used for allocating the memory acc to the given arguments
     temp->data = value;                  // the temp is holding the data which is been passed from the arguments of this function
 
@@ -54,7 +52,7 @@ void display()
         curr = curr->next;
     }
 }
-void delet(int value)
+void delet()
 {
     if (list == NULL)
     {
@@ -62,13 +60,27 @@ void delet(int value)
         return;
     }
 
+    int value;
+    cout << "Enter the value you want to delete : ";
+    cin >> value;
+
     Node *cur = list;
     if (value == list->data)
     {
-        list = list->next;
+        if (list->next != list)
+        {
+
+            list = list->next;
+            temp->next = list; // here i did this because when i delete the first value
+            // after then the temp next will still pointing to the last list head so now i updated it
+            // with new one
+            free(cur);
+            cout << value << " : Deleted Successfully \n";
+            return;
+        }
         free(cur);
+        list = NULL;
         cout << value << " : Deleted Successfully \n";
-        count--;
         return;
     }
     cur = list->next;
@@ -86,6 +98,35 @@ void delet(int value)
         cur = cur->next;
     }
     cout << "Can't Found: " << value << endl;
+}
+void search()
+{
+    if (list == NULL)
+    {
+        cout << "List is Empty. \n";
+        return;
+    }
+    int value;
+    cout << "Search value : ";
+    cin >> value;
+
+    Node *cur = list;
+    if (value == list->data)
+    {
+        cout << value << " Found\n";
+        return;
+    }
+    cur = list->next;
+    while (cur != list)
+    {
+        if (value == cur->data)
+        {
+            cout << value << " Found\n";
+            return;
+        }
+        cur = cur->next;
+    }
+    cout << "Can't Found : " << value << "\n";
 }
 int main()
 {
@@ -111,15 +152,21 @@ int main()
         {
             display();
         }
+        else if (input == 3)
+        {
+            search();
+        }
         else if (input == 4)
         {
-            cout << "Enter the value you want to delete : ";
-            cin >> value;
-            delet(value);
+            delet();
         }
         else if (input == 5)
         {
             flag = false;
+        }
+        else
+        {
+            cout << "Invalid Input";
         }
     }
 }
