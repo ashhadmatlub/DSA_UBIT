@@ -92,6 +92,10 @@ void search(int value)
         }
     }
 }
+void display()
+{
+    
+}
 int main()
 {
 
@@ -100,7 +104,7 @@ int main()
 
     while (flag)
     {
-        cout << " 1: For Insert, " << "2: To Search, " << "3 : For Exit: ";
+        cout << " 1: For Insert, " << "2: To Search, " << "3 : To Display ," << "4 : For Exit: ";
         cin >> input;
 
         if (input == 1)
@@ -117,7 +121,15 @@ int main()
         }
         else if (input == 3)
         {
+            display();
+        }
+        else if (input == 4)
+        {
             flag = false;
+        }
+        else
+        {
+            "Inavlid input ";
         }
     }
 }
