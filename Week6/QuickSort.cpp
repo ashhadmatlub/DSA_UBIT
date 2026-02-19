@@ -3,10 +3,10 @@
 #include <stdio.h>
 
 using namespace std;
+int arr[] = {77, 82, 11, 54, 76, 57, 25, 98, 59, 101, 89, 77, 45};
 
 int set_pivot(int L, int R)
 {
-    int arr[10] = {77, 82, 11, 54, 76, 57, 25, 98, 59, 101};
     int piv_ind = (L + R) / 2;
 
     while (L != R || L < R)
@@ -58,22 +58,22 @@ void Quick_Sort(int L, int R)
 int main()
 {
     int L = 0;
-    int R = 9;
+    int R = size(arr) - 1;
 
-    int arr[10] = {77, 82, 11, 54, 76, 57, 25, 98, 59, 101};
+    // int arr[10] = {77, 82, 11, 54, 76, 57, 25, 98, 59, 101};
     cout << "Before Sorting" << endl;
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i <= R; i++)
     {
         cout << arr[i];
-        if (i < 9)
+        if (i < R)
             cout << " , ";
     }
     Quick_Sort(L, R);
     cout << "\nAfter Sorting\n";
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i <= R; i++)
     {
         cout << arr[i];
-        if (i < 9)
+        if (i < R)
             cout << " , ";
     }
 }
