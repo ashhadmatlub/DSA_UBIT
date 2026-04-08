@@ -72,7 +72,7 @@ void delet()
 
             list = list->next;
             temp->next = list; // here i did this because when i delete the first value
-            // after then the temp next will still pointing to the last list head so now i updated it
+            // after then the temp next ( which is the last element )will still pointing to the last list head so now i updated it
             // with new one
             free(cur);
             cout << value << " : Deleted Successfully \n";
