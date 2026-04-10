@@ -4,11 +4,13 @@
 
 using namespace std;
 
-int array[15];
-int i = 0, siz = 1;
+int arrayy[15];
+int i = 0, siz = 0;
 
 // here i made swaping function because we need it in several places
-void swap(int greater, int smaller)
+void swap(int &greater, int &smaller)
+// One of the most IMP  ( & operator )
+// here i used the &operator so it pass by refrence now the change would be made inside an actual array not in the copy which is been made by me.
 {
     int temp = greater;
     greater = smaller;
@@ -25,52 +27,66 @@ void upHeapify(int arr[], int index)
         swap(arr[index], arr[parent]);
         upHeapify(arr, parent);
     }
-    else
-    {
-        return;
-    }
+    return;
 }
 
+// insert method
 void insert(int value)
 {
-    if (siz > sizeof(array))
+    if (siz >= sizeof(arrayy))
     {
-        cout << "Array is Full , Can't insert value " << endl;
+        cout << "Array is Full, Can't insert value, Delete First to insert new one" << endl;
     }
-    array[i] = value;
-    i++;
-    if (i > 1)
-    {
-
-        upHeapify(array, i);
-    }
+    arrayy[i] = value;
     siz++;
+    if (siz > 1)
+    {
+        upHeapify(arrayy, i);
+    }
+    i++;
 }
 
 // We use DownHeapify Function to delete values in Heap
-void downHeapify(int array[], int ind, int siz)
+void downHeapify(int arra[], int ind, int sizee)
 {
-    bool flag1 = true;
+    // bool flag1 = true;
+    // bool flag2 = true;
     int child1 = (2 * ind) + 1;
     int child2 = (2 * ind) + 2;
 
-    if (child1 < siz)
-    { // left child check
-        if (child2 < siz)
-        { // right child check
-            if (array[child1] > array[ind])
+    if (child1 < sizee) // left child check ( exists or not )
+    {
+        if (child2 < sizee) // // right child check ( exists or not )
+        {
+            if (arra[ind] < arra[child1] && arra[ind] > arra[child2])
             {
-                swap(array[child1], array[ind]);
-                flag1 = false;
+                swap(arra[child1], arra[ind]);
+                downHeapify(arrayy, child1, siz);
             }
-            if (array[child2] > array[ind])
+            if (arra[ind] > arra[child1] && arra[ind] < arra[child2])
             {
-                swap(array[child2] > array[ind]);
+                swap(arra[child2], arra[ind]);
+                downHeapify(arrayy, child2, siz);
+            }
+            if (arra[ind] < arra[child1] && arra[ind] < arra[child2])
+            {
+                if (arra[child1] < arra[child2])
+                {
+                    swap(arra[child2], arra[ind]);
+                    downHeapify(arrayy, child2, siz);
+                }
+                if (arra[child1] > arra[child2])
+                {
+                    swap(arra[child1], arra[ind]);
+                    downHeapify(arrayy, child1, siz);
+                }
             }
         }
-        if (flag1 == true) // only for left child
+        if (arra[ind] < arra[child1])
         {
-            swap(array[child1], array[ind]);
+
+            swap(arra[child1], arra[ind]);
+            downHeapify(arrayy, child1, siz);
         }
     }
 }
@@ -78,9 +94,19 @@ void downHeapify(int array[], int ind, int siz)
 // To delete values
 void del()
 {
-    swap(array[0], array[siz - 1]);
+    swap(arrayy[0], arrayy[siz - 1]);
     siz--;
-    downHeapify(array, 0, siz);
+    cout << "Root Element Deleted \n";
+    downHeapify(arrayy, 0, siz);
+}
+
+// display like a Tree Structure
+void display()
+{
+    for (int i = 0; i < siz; i++)
+    {
+        cout << arrayy[i] << endl;
+    }
 }
 
 int main()
@@ -90,7 +116,7 @@ int main()
 
     while (flag)
     {
-        cout << "Enter: 1 : To Insert , 2 : To Delete , 3 :To  Display  , 4 : Heap Sort, 5 : To Exit => ";
+        cout << "Enter: 1 : To Insert , 2 : To Delete , 3 : To  Display  , 4 : Heap Sort, 5 : To Exit => ";
         cin >> input;
 
         if (input == 1)
@@ -106,6 +132,7 @@ int main()
         }
         else if (input == 3)
         {
+            display();
         }
         else if (input == 4)
         {
