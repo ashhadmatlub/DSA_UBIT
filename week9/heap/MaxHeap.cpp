@@ -113,14 +113,13 @@ int levelFinder()
         n += pow(2, level);
         level++;
     }
-    int idx = 0;
-    int k = 0;
-    int count = 0;
     return level;
 }
 
 // It is the Display Tree function which Displays the tree level by level
-
+int idx = 0;
+int k = 0;
+int count = 0;
 int lvl = levelFinder();
 void treeDisplay()
 {
