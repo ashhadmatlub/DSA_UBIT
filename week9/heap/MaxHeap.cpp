@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <iostream>
 
 using namespace std;
@@ -33,7 +31,8 @@ void upHeapify(int arr[], int index)
 // insert method
 void insert(int value)
 {
-    if (siz >= sizeof(arrayy))
+    int length = sizeof(arrayy) / sizeof(arrayy[0]);
+    if (siz >= length)
     {
         cout << "Array is Full, Can't insert value, Delete First to insert new one" << endl;
     }
@@ -96,6 +95,7 @@ void del()
 {
     swap(arrayy[0], arrayy[siz - 1]);
     siz--;
+    i--; // so the last element get lost / delete / remove
     cout << "Root Element Deleted \n";
     downHeapify(arrayy, 0, siz);
 }
