@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -43,6 +44,7 @@ void insert(int value)
         upHeapify(arrayy, i);
     }
     i++;
+    levelFinder();
 }
 
 // We use DownHeapify Function to delete values in Heap
@@ -98,14 +100,79 @@ void del()
     i--; // so the last element get lost / delete / remove
     cout << "Root Element Deleted \n";
     downHeapify(arrayy, 0, siz);
+    levelFinder();
 }
 
-// display like a Tree Structure
+// It is the levelFinder function which finds the level / height of the tree
+int levelFinder()
+{
+    int level = 0;
+    int n = 0;
+    while (n < siz)
+    {
+        n += pow(2, level);
+        level++;
+    }
+    int idx = 0;
+    int k = 0;
+    int count = 0;
+    return level;
+}
+
+// It is the Display Tree function which Displays the tree level by level
+
+int lvl = levelFinder();
+void treeDisplay()
+{
+    int m = 0;
+    while (m < lvl)
+    {
+        cout << "  ";
+        m++;
+    }
+    cout << arrayy[idx];
+    count++;
+    if (count < pow(2, k))
+    {
+        idx++;
+        treeDisplay();
+    }
+
+    if (count < siz)
+    {
+        cout << "\n";
+        lvl -= 1;
+        idx++;
+        k++;
+        treeDisplay();
+    }
+    else
+    {
+        return;
+    }
+}
+
+// display like a Tree Structure / normal
 void display()
 {
-    for (int i = 0; i < siz; i++)
+    cout << " 1 : Normal Display, 2: Tree Display: ";
+    int input;
+    cin >> input;
+    if (input == 1)
     {
-        cout << arrayy[i] << endl;
+        for (int i = 0; i < siz; i++)
+        {
+            cout << arrayy[i] << endl;
+        }
+    }
+    // Tree Structure Display
+    else if (input == 2)
+    {
+        treeDisplay();
+    }
+    else
+    {
+        cout << "Invalid ";
     }
 }
 
