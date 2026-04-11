@@ -112,6 +112,11 @@ void downHeapify(int arra[], int ind, int sizee)
 // To delete values
 void del()
 {
+    if (siz == 0)
+    {
+        cout << "Heap is empty\n";
+        return;
+    }
     swap(arrayy[0], arrayy[siz - 1]);
     siz--;
     i--; // so the last element get lost / delete / remove
@@ -126,7 +131,6 @@ void treeDisplay(int count, int ind, bool flag, int lvl, int exp)
 {
     if (ind >= siz)
     {
-        cout << "\n";
         return;
     }
 
