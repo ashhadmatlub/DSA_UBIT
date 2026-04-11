@@ -117,11 +117,11 @@ void del()
 }
 
 // It is the Function which Displays the tree in an actual tree Structure like level by level
-// int chck = levelFinder();
-// int j = 0;
-void treeDisplay(int ind, int lvl, int count)
+
+int lvl = levelFinder();
+void treeDisplay()
 {
-    if (count > siz)
+    if (count >= siz)
     {
         return;
     }
@@ -133,24 +133,6 @@ void treeDisplay(int ind, int lvl, int count)
         m++;
     }
     cout << arrayy[ind];
-    // if (pow(2, chck) > 1 && pow(2, chck) >= count && count > 1)
-    // {
-    //     while (j < pow(2, chck))
-    //     {
-    //         j++;
-    //         count++;
-    //         treeDisplay(ind++, lvl, count);
-    //     }
-    // }
-    // else
-    // {
-    //     chck -= lvl;
-    //     lvl--;
-    //     ind++;
-    //     count++;
-    //     cout << "\n";
-    // }
-    treeDisplay(ind, lvl, count);
 }
 
 // display like a Tree Structure / normal
@@ -170,7 +152,7 @@ void display()
     else if (input == 2)
     {
         int lev = levelFinder();
-        treeDisplay(0, lev, 1);
+        treeDisplay(); //  ind , lvl , count , exponent
     }
     else
     {
