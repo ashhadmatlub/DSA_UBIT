@@ -12,10 +12,66 @@ struct Node
 
 Node *list = NULL;
 Node *curr;
+int count = 0; //  for Sorting
+
+void swap(int &greater, int &smaller)
+// One of the most IMP  ( & operator )
+// here i used the &operator so it pass by refrence now the change would be made inside an actual array not in the copy which is been made by me.
+{
+    int temp = greater;
+    greater = smaller;
+    smaller = temp;
+}
+
+void bubbleSort()
+{
+    int k = count - 1;
+    int j;
+    bool flag = true;
+    if (list == NULL)
+    {
+        cout << "List is empty ";
+        return;
+    }
+    Node *cur;
+    for (int i = 0; i < count; i++)
+    {
+        cur = list;
+        j = 0;
+        while (j < k)
+        {
+            if (cur->next == NULL)
+            {
+                break;
+            }
+            if (cur->data < cur->next->data)
+            {
+                cur = cur->next;
+                j++;
+            }
+            else
+            {
+                swap(cur->data, cur->next->data);
+                flag = false;
+                cur = cur->next;
+                j++;
+            }
+        }
+        k--;
+    }
+    if (flag == false)
+    {
+        cout << "Sorted successfully \n";
+    }
+    else
+    {
+        cout << "Not Sorted Due to an error\n";
+    }
+}
 
 void insert(int value)
 {
-
+    count++; // used for sorting kind of tracking
     Node *temp;
     temp = (Node *)malloc(sizeof(Node));
     temp->data = value;
@@ -94,6 +150,8 @@ void del(int value)
     {
         list = list->next;
         free(cur);
+        cout << "Deleted successfully : " << value;
+        count--;
         return;
     }
     cur = list->next;
@@ -105,6 +163,7 @@ void del(int value)
             prev->next = cur->next;
             free(cur);
             cout << "Deleted successfully : " << value;
+            count--;
             return;
         }
         cur = cur->next;
@@ -121,7 +180,7 @@ int main()
 
     while (!flag)
     {
-        cout << " 1: For Insert, " << "2: For Display, " << "3: For Search, " << "4: To Delete, " << "5: Exit => ";
+        cout << " 1: For Insert, " << "2: For Display, " << "3: For Search, " << "4: To Delete, " << " , 5: To Sort , 6: Exit => ";
         cin >> input;
 
         if (input == 1)
@@ -156,6 +215,10 @@ int main()
             del(value);
         }
         else if (input == 5)
+        {
+            bubbleSort();
+        }
+        else if (input == 6)
         {
             flag = true;
         }
