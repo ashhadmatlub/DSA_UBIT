@@ -36,7 +36,8 @@ void swap(int &greater, int &smaller)
 // We use UpHeapify Function to insert the values in Heap
 void upHeapify(int arr[], int index)
 {
-
+    if (index == 0)
+        return;
     int parent = (index - 1) / 2;
     if (arr[index] > arr[parent])
     {
@@ -80,24 +81,24 @@ void downHeapify(int arra[], int ind, int sizee)
             if (arra[ind] < arra[child1] && arra[ind] > arra[child2])
             {
                 swap(arra[child1], arra[ind]);
-                downHeapify(arrayy, child1, siz);
+                downHeapify(arra, child1, sizee);
             }
             if (arra[ind] > arra[child1] && arra[ind] < arra[child2])
             {
                 swap(arra[child2], arra[ind]);
-                downHeapify(arrayy, child2, siz);
+                downHeapify(arra, child2, sizee);
             }
             if (arra[ind] < arra[child1] && arra[ind] < arra[child2])
             {
                 if (arra[child1] < arra[child2])
                 {
                     swap(arra[child2], arra[ind]);
-                    downHeapify(arrayy, child2, siz);
+                    downHeapify(arra, child2, sizee);
                 }
                 if (arra[child1] > arra[child2])
                 {
                     swap(arra[child1], arra[ind]);
-                    downHeapify(arrayy, child1, siz);
+                    downHeapify(arra, child1, sizee);
                 }
             }
         }
@@ -105,7 +106,7 @@ void downHeapify(int arra[], int ind, int sizee)
         {
 
             swap(arra[child1], arra[ind]);
-            downHeapify(arrayy, child1, siz);
+            downHeapify(arra, child1, sizee);
         }
     }
 }
@@ -189,6 +190,19 @@ void display()
     }
 }
 
+// Heap Sort ( after heap Sort the Heap loses its Structure, However the elements gets sorted)
+void heapSort(int length)
+{
+    if (length <= 1)
+    {
+        return;
+    }
+    swap(arrayy[0], arrayy[length - 1]);
+    length--;
+    downHeapify(arrayy, 0, length);
+    heapSort(length);
+}
+
 int main()
 {
     bool flag = true;
@@ -216,6 +230,7 @@ int main()
         }
         else if (input == 4)
         {
+            heapSort(siz);
         }
         else if (input == 5)
         {
