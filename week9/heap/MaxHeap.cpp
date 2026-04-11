@@ -6,6 +6,19 @@ using namespace std;
 int arrayy[15];
 int i = 0, siz = 0;
 
+// It is the levelFinder function which finds the level / height of the tree
+int levelFinder()
+{
+    int level = 0;
+    int n = 0;
+    while (n < siz)
+    {
+        n += pow(2, level);
+        level++;
+    }
+    return level;
+}
+
 // here i made swaping function because we need it in several places
 void swap(int &greater, int &smaller)
 // One of the most IMP  ( & operator )
@@ -103,52 +116,41 @@ void del()
     levelFinder();
 }
 
-// It is the levelFinder function which finds the level / height of the tree
-int levelFinder()
+// It is the Function which Displays the tree in an actual tree Structure like level by level
+// int chck = levelFinder();
+// int j = 0;
+void treeDisplay(int ind, int lvl, int count)
 {
-    int level = 0;
-    int n = 0;
-    while (n < siz)
+    if (count > siz)
     {
-        n += pow(2, level);
-        level++;
+        return;
     }
-    return level;
-}
 
-// It is the Display Tree function which Displays the tree level by level
-int idx = 0;
-int k = 0;
-int count = 0;
-int lvl = levelFinder();
-void treeDisplay()
-{
     int m = 0;
     while (m < lvl)
     {
         cout << "  ";
         m++;
     }
-    cout << arrayy[idx];
-    count++;
-    if (count < pow(2, k))
-    {
-        idx++;
-        treeDisplay();
-    }
-
-    if (count < siz)
-    {
-        cout << "\n";
-        lvl -= 1;
-        idx++;
-        k++;
-        treeDisplay();
-    }
-    else
-    {
-        return;
-    }
+    cout << arrayy[ind];
+    // if (pow(2, chck) > 1 && pow(2, chck) >= count && count > 1)
+    // {
+    //     while (j < pow(2, chck))
+    //     {
+    //         j++;
+    //         count++;
+    //         treeDisplay(ind++, lvl, count);
+    //     }
+    // }
+    // else
+    // {
+    //     chck -= lvl;
+    //     lvl--;
+    //     ind++;
+    //     count++;
+    //     cout << "\n";
+    // }
+    treeDisplay(ind, lvl, count);
 }
 
 // display like a Tree Structure / normal
@@ -167,7 +169,8 @@ void display()
     // Tree Structure Display
     else if (input == 2)
     {
-        treeDisplay();
+        int lev = levelFinder();
+        treeDisplay(0, lev, 1);
     }
     else
     {
