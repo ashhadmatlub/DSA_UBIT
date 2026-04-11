@@ -137,7 +137,7 @@ void treeDisplay(int count, int ind, bool flag, int lvl, int exp)
     int m = 0;
     while (m < lvl)
     {
-        cout << "  ";
+        cout << " ";
         m++;
     }
     cout << arrayy[ind];
