@@ -5,15 +5,19 @@ using namespace std;
 
 int arrayy[15];
 int i = 0, siz = 0;
+bool flag;
+int lvl, power = 0;
 
 // It is the levelFinder function which finds the level / height of the tree
 int levelFinder()
 {
+    flag = true;      // for tree
+    double power = 0; // for tree
     int level = 0;
     int n = 0;
     while (n < siz)
     {
-        n += pow(2, level);
+        n += (1 << level);
         level++;
     }
     return level;
@@ -57,7 +61,7 @@ void insert(int value)
         upHeapify(arrayy, i);
     }
     i++;
-    levelFinder();
+    lvl = levelFinder();
 }
 
 // We use DownHeapify Function to delete values in Heap
@@ -113,16 +117,16 @@ void del()
     i--; // so the last element get lost / delete / remove
     cout << "Root Element Deleted \n";
     downHeapify(arrayy, 0, siz);
-    levelFinder();
+    lvl = levelFinder();
 }
 
 // It is the Function which Displays the tree in an actual tree Structure like level by level
 
-int lvl = levelFinder();
-void treeDisplay()
+void treeDisplay(int count, int ind, bool flag, int lvl, int exp)
 {
-    if (count >= siz)
+    if (ind >= siz)
     {
+        cout << "\n";
         return;
     }
 
@@ -133,6 +137,24 @@ void treeDisplay()
         m++;
     }
     cout << arrayy[ind];
+    if (flag == true)
+    {
+        power += (1 << exp);
+    }
+    if (count < power)
+    {
+        ind++;
+        count++;
+        treeDisplay(count, ind, false, lvl, exp);
+        cout << "\n";
+        return;
+    }
+    cout << "\n";
+    exp++;
+    ind++;
+    count++;
+    lvl--;
+    treeDisplay(count, ind, true, lvl, exp);
 }
 
 // display like a Tree Structure / normal
@@ -152,7 +174,8 @@ void display()
     else if (input == 2)
     {
         int lev = levelFinder();
-        treeDisplay(); //  ind , lvl , count , exponent
+        power = 0;
+        treeDisplay(1, 0, true, lev, 0); //  count , ind , flag , lvl , exp
     }
     else
     {
