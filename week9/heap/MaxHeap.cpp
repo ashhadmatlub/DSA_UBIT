@@ -53,6 +53,7 @@ void insert(int value)
     if (siz >= length)
     {
         cout << "Array is Full, Can't insert value, Delete First to insert new one" << endl;
+        return;
     }
     arrayy[i] = value;
     siz++;
@@ -159,6 +160,7 @@ void treeDisplay(int count, int ind, bool flag, int lvl, int exp)
     count++;
     lvl--;
     treeDisplay(count, ind, true, lvl, exp);
+    return;
 }
 
 // display like a Tree Structure / normal
