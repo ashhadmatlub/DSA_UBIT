@@ -9,44 +9,33 @@ struct Node
 {
     int data;
     Node *next;
-    Node *prev;
 };
 
-Node *list = NULL;
 Node *curr = NULL;
-Node *pre = NULL;
 
-// void push(int value)
-// {
-//     Node *temp;
-//     temp = (Node *)malloc(sizeof(Node));
-//     temp->data = value;
-//     temp->next = NULL;
-//     temp->prev = curr;
-//     curr = temp;
+void push(int value)
+{
+    Node *temp;
+    temp = (Node *)malloc(sizeof(Node));
+    temp->data = value;
+    temp->next = curr;
+    curr = temp;
+}
 
-//     if (list == NULL)
-//     {
-//         list = temp;
-//         pre = list;
-//     }
-// }
+int pop()
+{
+    if (curr == NULL)
+    {
+        cout << "Stack underflow ";
+        return -1;
+    }
+    Node *temp = curr;
+    int value = temp->data;
 
-// int pop()
-// {
-//     if (list == NULL)
-//     {
-//         cout << "Stack underflow ";
-//         return -1;
-//     }
-//     Node *temp;
-//     temp = curr;
-//     free(temp);
-//     int value = curr->data;
-//     curr = pre;
-//     pre = pre->prev;
-//     return value;
-// }
+    curr = curr->next;
+    free(temp);
+    return value;
+}
 
 int main()
 {
