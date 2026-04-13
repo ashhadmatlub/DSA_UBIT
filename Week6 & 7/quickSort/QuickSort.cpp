@@ -3,13 +3,14 @@
 #include <stdio.h>
 
 using namespace std;
-int arr[] = {77, 82, 11, 54, 76, 57, 25, 98, 59, 101, 89, 77, 45};
+// int arr[] = {77, 82, 11, 54, 76, 57, 25, 98, 59, 101, 89, 77, 45};
+int arr[] = {82, 15, 6, 93, 44, 71, 30, 58, 22, 67};
 
 int set_pivot(int L, int R)
 {
     int piv_ind = (L + R) / 2;
 
-    while (L != R || L < R)
+    while (L < R)
     {
         while (piv_ind < R) // for traversing through right hand side
         {
@@ -52,6 +53,11 @@ void Quick_Sort(int L, int R)
         int piv_ind = set_pivot(L, R);
         Quick_Sort(L, (piv_ind)-1);
         Quick_Sort((piv_ind) + 1, R);
+    }
+    else
+    {
+        cout << "Invalid inputs, as L cant be greater then R ";
+        return;
     }
 }
 
