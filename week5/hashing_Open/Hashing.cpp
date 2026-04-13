@@ -94,7 +94,6 @@ void search(int value)
 }
 void display()
 {
-    
 }
 int main()
 {
