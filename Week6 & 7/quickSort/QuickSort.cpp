@@ -51,8 +51,8 @@ void Quick_Sort(int L, int R)
     if (L < R)
     {
         int piv_ind = set_pivot(L, R);
-        Quick_Sort(L, (piv_ind)-1);
-        Quick_Sort((piv_ind) + 1, R);
+        Quick_Sort(L, (piv_ind)-1);   // left traverse
+        Quick_Sort((piv_ind) + 1, R); // right traverse
     }
     else
     {
