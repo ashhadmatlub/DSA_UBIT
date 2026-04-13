@@ -7,7 +7,7 @@ using namespace std;
 
 int main()
 {
-    int input[10] = {5,5,5,5,5,5,5,5,5,5};
+    int input[10] = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
     int find;
     cout << " Enter the number you wanna find ";
     cin >> find;
@@ -16,9 +16,9 @@ int main()
     int l = 0;
     int r = 9;
     int mid, traverse;
-    int i = 1;
+    int i = 1, j = 1;
 
-    while (l <= r  )
+    while (l <= r)
     {
         mid = (l + r) / 2;
         if (input[mid] == find)
@@ -29,11 +29,12 @@ int main()
             while ((mid + count) < 10 || (traverse - i) >= 0)
             {
 
-                if ((mid + count) < 10 && input[(mid + count)] == find)
+                if ((mid + j) < 10 && input[(mid + j)] == find)
                 {
+                    j++;
                     count++;
                 }
-                if (  (traverse - i) >= 0 && input[(traverse - i)] == find )
+                if ((traverse - i) >= 0 && input[(traverse - i)] == find)
                 {
                     i++;
                     count++;
@@ -53,7 +54,6 @@ int main()
         {
             l = mid + 1;
         }
-
     }
     if (valid)
     {
@@ -63,5 +63,5 @@ int main()
     {
         cout << " The number is found " << count << " time ";
     }
-    return 0 ;
+    return 0;
 }

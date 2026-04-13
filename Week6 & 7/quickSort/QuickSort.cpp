@@ -54,11 +54,11 @@ void Quick_Sort(int L, int R)
         Quick_Sort(L, (piv_ind)-1);   // left traverse
         Quick_Sort((piv_ind) + 1, R); // right traverse
     }
-    else
-    {
-        cout << "Invalid inputs, as L cant be greater then R ";
-        return;
-    }
+    // else
+    // {
+    //     cout << "Invalid inputs, as L cant be greater then R ";
+    //     return;
+    // }
 }
 
 int main()

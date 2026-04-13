@@ -29,7 +29,7 @@ void insert(int value)
     int i = 1;
     while (flag && i < 10)
     {
-        int idx = (ind + i) % siz;
+        int idx = (ind + i) % siz; // for quadratic probing we would use ( i*i )
         if (hashs[idx] == -1)
         {
             hashs[idx] = value;
