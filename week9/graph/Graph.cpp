@@ -1,17 +1,26 @@
 #include <iostream>
 using namespace std;
 
+// undirected graph
 // Graph Operations => Degree of a vertex , Sum of Degree , Path b/w two vertices , Connected or not , Acyclic or cyclic
 
 // ploting the value in graph
 void plot_Graph(int value)
 {
-    int times = value;
     int suc, j;
-    value -= 1;
     int suc_Value;
     int arr[value][value];
-    for (int i = 0; i < times; i++) // it will runs n/value times
+
+    // TO FILL ARRAY WITH 0
+    for (int i = 0; i < value; i++)
+    {
+        for (int c = 0; c < value; c++)
+        {
+            arr[i][c] = 0;
+        }
+    }
+
+    for (int i = 0; i < value; i++) // it will runs n/value times
     {
         cout << "How many successors are of vertice ? : " << (i + 1) << " : ";
         cin >> suc;
@@ -21,8 +30,16 @@ void plot_Graph(int value)
         {
             cout << "Enter successor of vertice : " << (i + 1) << " ";
             cin >> suc_Value;
-            arr1[j] = suc_Value;
-            j++;
+            if (suc_Value <= value && suc_Value >= 0) // constraints ( that the value of vertice must be inside the vertice like the vertice which doesnt exists can't be added )
+            {
+                arr1[j] = suc_Value;
+                j++;
+            }
+            else
+            {
+                cout << "Vertice doesnt exists ";
+                continue;
+            }
         }
         int len = sizeof(arr1) / sizeof(arr1[0]); // to store value
         for (int k = 0; k < len; k++)
@@ -59,24 +76,33 @@ void plot_Graph(int value)
 // }
 // }
 
+// it will give the degree of a vertex.
+int degree_Finder(int vertice)
+{
+}
+
 int main()
 {
     int input, vertices;
     bool flag = true;
 
-    cout << "Enter no of vertices to start the program : ";
+    cout << "Enter no of vertices to plot on graph : ";
     cin >> vertices;
 
     if (vertices > 0)
     {
         plot_Graph(vertices);
-        // display(vertices);
         while (flag)
         {
-            cout << "Enter => : 1 To Find Degree of a vertex , 2 : Find Sum of Degree , 3 : To find path b/w two vertices , 4 : To Find connected or not , 5 : Cyclic or Acyclic, 6 : To Display , 7 : Exit";
+            cout << "Enter => : 1 To Find Degree of a vertex , 2 : Find Sum of Degree , 3 : To find path b/w two vertices , 4 : To Find connected or not , 5 : Cyclic or Acyclic, 6 : To Display , 7 : Exit ";
             cin >> input;
             if (input == 1)
             {
+                int vertex;
+                cout << "Enter Vertex to find its degree : ";
+                cin >> vertex;
+                int degree = degree_Finder(vertex);
+                cout << "The Degree of Vertice " << vertex << "is : " << degree;
             }
             else if (input == 7)
             {
