@@ -79,6 +79,7 @@ void plot_Graph(int value)
 // it will give the degree of a vertex.
 int degree_Finder(int vertice)
 {
+    return 0;
 }
 
 int main()
