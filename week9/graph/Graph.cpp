@@ -4,6 +4,13 @@ using namespace std;
 // undirected graph
 // Graph Operations => Degree of a vertex , Sum of Degree , Path b/w two vertices , Connected or not , Acyclic or cyclic
 
+// val
+int value(int val)
+{
+    return val;
+}
+const int val = value(0);
+
 // ploting the value in graph
 void plot_Graph(int value)
 {
@@ -93,6 +100,7 @@ int main()
     if (vertices > 0)
     {
         plot_Graph(vertices);
+        int arra[vertices][vertices];
         while (flag)
         {
             cout << "Enter => : 1 To Find Degree of a vertex , 2 : Find Sum of Degree , 3 : To find path b/w two vertices , 4 : To Find connected or not , 5 : Cyclic or Acyclic, 6 : To Display , 7 : Exit ";
