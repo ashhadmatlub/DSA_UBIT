@@ -91,6 +91,25 @@ int degree_Finder(int value, int vertices, int (*arr)[maxx]) // value means the 
     return count;
 }
 
+// sum of degree
+void degree_Sum(int value, int (*arr)[maxx])
+{
+    int count = 0;
+    for (int i = 0; i < value; i++)
+    {
+        for (int k = 0; k < value; k++)
+        {
+            cout << arr[i][k];
+            if (arr[i][k] == 1)
+            {
+                count++;
+            }
+        }
+        cout << "\n";
+    }
+    cout << "Sum of Degree is : " << count << " \n ";
+}
+
 int main()
 {
     int input, vertices;
@@ -113,7 +132,11 @@ int main()
                 cout << "Enter Vertex to find its degree : ";
                 cin >> vertex;
                 int degree = degree_Finder(vertices, vertex, arra);
-                cout << "The Degree of Vertice " << vertex << "is : " << degree << "\n";
+                cout << "The Degree of Vertex " << vertex << " is : " << degree << "\n";
+            }
+            else if (input == 2)
+            {
+                degree_Sum(vertices, arra);
             }
             else if (input == 6)
             {
