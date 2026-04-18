@@ -4,19 +4,14 @@ using namespace std;
 // undirected graph
 // Graph Operations => Degree of a vertex , Sum of Degree , Path b/w two vertices , Connected or not , Acyclic or cyclic
 
-// val
-int value(int val)
-{
-    return val;
-}
-const int val = value(0);
+const int maxx = 100; // Globally Declare array size
 
 // ploting the value in graph
-void plot_Graph(int value)
+void plot_Graph(int value, int (*arr)[maxx])
 {
     int suc, j;
     int suc_Value;
-    int arr[value][value];
+    // int arr[value][value];
 
     // TO FILL ARRAY WITH 0
     for (int i = 0; i < value; i++)
@@ -29,13 +24,17 @@ void plot_Graph(int value)
 
     for (int i = 0; i < value; i++) // it will runs n/value times
     {
-        cout << "How many successors are of vertice ? : " << (i + 1) << " : ";
-        cin >> suc;
+        do // i did this because , vertices successors must be <= no.of vertices
+        {
+            cout << "Vertices successors must be <= no.of vertices \n";
+            cout << "How many successors are of vertice ? : " << (i + 1) << " : ";
+            cin >> suc;
+        } while (suc > value);
         int arr1[suc];
         j = 0;
         while (j < suc) // to ask from the user how many successors are there
         {
-            cout << "Enter successor of vertice : " << (i + 1) << " ";
+            cout << "Enter successor of vertice : " << (i + 1) << " : ";
             cin >> suc_Value;
             if (suc_Value <= value && suc_Value >= 0) // constraints ( that the value of vertice must be inside the vertice like the vertice which doesnt exists can't be added )
             {
@@ -44,7 +43,7 @@ void plot_Graph(int value)
             }
             else
             {
-                cout << "Vertice doesnt exists ";
+                cout << "Vertice doesnt exists \n";
                 continue;
             }
         }
@@ -56,12 +55,14 @@ void plot_Graph(int value)
             arr[i][val - 1] = 1;
         }
     }
+}
 
-    // to display
-    int m = value;
+// display
+void display(int value, int (*arr)[maxx])
+{
     for (int i = 0; i < value; i++)
     {
-        for (int k = 0; k < m; k++)
+        for (int k = 0; k < value; k++)
         {
             cout << arr[i][k];
         }
@@ -69,24 +70,25 @@ void plot_Graph(int value)
     }
 }
 
-// display
-// void display(int ver)
-// {
-// int j = ver;
-// for (int i = 0; i < ver; i++)
-// {
-//     for (int k = 0; k < j; k++)
-//     {
-//         cout << arr2[i][k];
-//     }
-//     cout << "\n";
-// }
-// }
-
 // it will give the degree of a vertex.
-int degree_Finder(int vertice)
+int degree_Finder(int value, int vertices, int (*arr)[maxx]) // value means the loop will run this times , verices tells to find the value of that vertice ;
 {
-    return 0;
+    if (vertices > value)
+    {
+        cout << "Vertices doesnt exists ";
+        return 0;
+    }
+    int count = 0;
+    vertices -= 1; // so we can use it in indexing ;
+    for (int i = 0; i < value; i++)
+    {
+        int deg = arr[vertices][i];
+        if (deg == 1)
+        {
+            count++;
+        }
+    }
+    return count;
 }
 
 int main()
@@ -97,21 +99,25 @@ int main()
     cout << "Enter no of vertices to plot on graph : ";
     cin >> vertices;
 
-    if (vertices > 0)
+    if (vertices > 0 && vertices < 100)
     {
-        plot_Graph(vertices);
-        int arra[vertices][vertices];
+        int arra[100][100];
+        plot_Graph(vertices, arra);
         while (flag)
         {
-            cout << "Enter => : 1 To Find Degree of a vertex , 2 : Find Sum of Degree , 3 : To find path b/w two vertices , 4 : To Find connected or not , 5 : Cyclic or Acyclic, 6 : To Display , 7 : Exit ";
+            cout << "Enter => : 1 To Find Degree of a vertex \n 2 : Find Sum of Degree \n 3 : To find path b/w two vertices \n 4 : To Find connected or not \n 5 : Cyclic or Acyclic \n 6 : To Display \n 7 : Exit \n";
             cin >> input;
             if (input == 1)
             {
                 int vertex;
                 cout << "Enter Vertex to find its degree : ";
                 cin >> vertex;
-                int degree = degree_Finder(vertex);
-                cout << "The Degree of Vertice " << vertex << "is : " << degree;
+                int degree = degree_Finder(vertices, vertex, arra);
+                cout << "The Degree of Vertice " << vertex << "is : " << degree << "\n";
+            }
+            else if (input == 6)
+            {
+                display(vertices, arra);
             }
             else if (input == 7)
             {

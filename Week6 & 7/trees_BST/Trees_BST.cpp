@@ -69,7 +69,7 @@ void display_Post_Order(Node *curr)
     }
 }
 
-Node *deleteNode(Node *curr, value)
+Node *deleteNode(Node *curr, int value)
 {
     if (curr == NULL)
     {
@@ -103,12 +103,12 @@ Node *deleteNode(Node *curr, value)
     }
     if (value > curr->data)
     {
-        curr->right = DeleteNode(curr->right, value);
+        curr->right = deleteNode(curr->right, value);
         return curr;
     }
     if (value < curr->data)
     {
-        curr->left = DeleteNode(curr->left, value);
+        curr->left = deleteNode(curr->left, value);
         return curr;
     }
 }
@@ -117,11 +117,11 @@ Node *deleteNode(Node *curr, value)
 
 Node *minNode(Node *curr)
 {
-    while (temp->left != NULL)
+    while (curr->left != NULL)
     {
-        temp = temp->left;
+        curr = curr->left;
     }
-    return temp;
+    return curr;
 }
 
 int main()
@@ -161,7 +161,10 @@ int main()
         }
         else if (input == 3)
         {
-            deleteNode(Root);
+            int value;
+            cout << "enter the value you wanna delete : \n";
+            cin >> value;
+            deleteNode(Root, value);
         }
         else if (input == 4)
         {
