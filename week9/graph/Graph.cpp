@@ -110,6 +110,44 @@ void degree_Sum(int value, int (*arr)[maxx])
     cout << "Sum of Degree is : " << count << " \n ";
 }
 
+// connected or not // under process
+void connection(int value, int (*arr)[maxx])
+{
+    int i = 0, j = 1;
+    bool flag = true;
+    int arra[value - 1];
+    for (int ind = 0; ind < (value - 1); ind++)
+    {
+        arra[ind] = 1;
+    }
+    while (i < value && j < value)
+    {
+        if (arr[i][j] == 1)
+        {
+            arra[j - 1] = 0;
+            j++;
+            if (i > 0)
+                i--;
+        }
+        else
+        {
+            i++;
+        }
+    }
+    for (int n = 0; n < (value - 1); n++)
+    {
+        if (arra[n] == 1)
+        {
+            flag = false;
+            break;
+        }
+    }
+    if (flag)
+        cout << "Graph is connected \n";
+    else
+        cout << "Graph isn't connected \n";
+}
+
 int main()
 {
     int input, vertices;
@@ -137,6 +175,10 @@ int main()
             else if (input == 2)
             {
                 degree_Sum(vertices, arra);
+            }
+            else if (input == 4)
+            {
+                connection(vertices, arra);
             }
             else if (input == 6)
             {
