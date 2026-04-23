@@ -148,9 +148,28 @@ void connection(int value, int (*arr)[maxx])
         cout << "Graph isn't connected \n";
 }
 
+// to check wheather we can start with a vertice and come back to it without repition of edges
 bool isCyclic(int value, int (*arr)[maxx])
 {
-    
+    if (value <= 1)
+    {
+        cout << "Since there is only 1 vertex, hence no cycle exists";
+        return false;
+    }
+    // for two vertices
+    if (value == 2)
+    {
+        int i = 0, j = 1;
+        while (i < 2)
+        {
+            if (arr[i][j] == 1)
+            {
+                i++, j--;
+            }
+        }
+    }
+
+    // for more multiple vertices
 }
 
 int main()
