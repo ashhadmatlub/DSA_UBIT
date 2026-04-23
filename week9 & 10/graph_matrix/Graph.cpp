@@ -34,9 +34,9 @@ void plot_Graph(int value, int (*arr)[maxx])
         j = 0;
         while (j < suc) // to ask from the user how many successors are there
         {
-            cout << "Enter successor of vertice : " << (i + 1) << " : ";
+            cout << "Enter successor(the current vertices pointing towards) of vertice : " << (i + 1) << " : ";
             cin >> suc_Value;
-            if (suc_Value <= value && suc_Value >= 0) // constraints ( that the value of vertice must be inside the vertice like the vertice which doesnt exists can't be added )
+            if (suc_Value <= value && suc_Value > 0) // constraints ( that the value of vertice must be inside the vertice like the vertice which doesnt exists can't be added )
             {
                 arr1[j] = suc_Value;
                 j++;
