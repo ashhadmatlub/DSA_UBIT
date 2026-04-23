@@ -152,7 +152,7 @@ void treeDisplay(int count, int ind, bool flag, int lvl, int exp)
         ind++;
         count++;
         treeDisplay(count, ind, false, lvl, exp);
-        cout << "\n";
+        // cout << "\n";
         return;
     }
     cout << "\n";
@@ -161,6 +161,7 @@ void treeDisplay(int count, int ind, bool flag, int lvl, int exp)
     count++;
     lvl--;
     treeDisplay(count, ind, true, lvl, exp);
+    cout << "\n";
     return;
 }
 

@@ -4,7 +4,7 @@ using namespace std;
 // undirected graph
 // Graph Operations => Degree of a vertex , Sum of Degree , Path b/w two vertices , Connected or not , Acyclic or cyclic
 
-const int maxx = 100; // Globally Declare array size
+const int maxx = 100; // Globally Declared array size
 
 // ploting the value in graph
 void plot_Graph(int value, int (*arr)[maxx])
@@ -146,6 +146,11 @@ void connection(int value, int (*arr)[maxx])
         cout << "Graph is connected \n";
     else
         cout << "Graph isn't connected \n";
+}
+
+bool isCyclic(int value, int (*arr)[maxx])
+{
+    
 }
 
 int main()
