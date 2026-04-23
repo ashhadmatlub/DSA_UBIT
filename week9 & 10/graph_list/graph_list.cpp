@@ -1,5 +1,9 @@
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 using namespace std;
+
+struct Edge;
 
 struct Vertex
 {
@@ -14,6 +18,22 @@ struct Edge
     Edge *next;
     Vertex *V;
 };
+
+Vertex *V_list;
+
+void insert_Vertex(int vertex)
+{
+    Vertex *temp;
+    temp = (Vertex *)malloc(sizeof(Vertex));
+    temp->data = vertex;
+    temp->next = NULL;
+    temp->Edge_List = NULL;
+
+    if (V_list == NULL)
+    {
+        V_list = temp;
+    }
+}
 
 int main()
 {
