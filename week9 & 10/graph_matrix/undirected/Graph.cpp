@@ -2,7 +2,7 @@
 using namespace std;
 
 // undirected graph
-// Graph Operations => Degree of a vertex , Sum of Degree , Path b/w two vertices , Connected or not , Acyclic or cyclic
+// Graph Operations => Degree of a vertex , Sum of Degree , isAdjacent , Neighbour
 
 const int maxx = 100; // Globally Declared array size
 
@@ -75,7 +75,7 @@ int degree_Finder(int value, int vertices, int (*arr)[maxx]) // value means the 
 {
     if (vertices > value)
     {
-        cout << "Vertices doesnt exists ";
+        cout << "Vertices doesnt exists so";
         return 0;
     }
     int count = 0;
@@ -99,79 +99,68 @@ void degree_Sum(int value, int (*arr)[maxx])
     {
         for (int k = 0; k < value; k++)
         {
-            cout << arr[i][k];
+            // cout << arr[i][k];
             if (arr[i][k] == 1)
             {
                 count++;
             }
         }
-        cout << "\n";
+        // cout << "\n";
     }
     cout << "Sum of Degree is : " << count << " \n ";
 }
 
 // connected or not // under process
-void connection(int value, int (*arr)[maxx])
+// void connection(int value, int (*arr)[maxx])
+//  to check wheather we can start with a vertice and come back to it without repition of edges
+// bool isCyclic(int value, int (*arr)[maxx])
+// {
+//     if (value <= 1)
+//     {
+//         cout << "Since there is only 1 vertex, hence no cycle exists";
+//         return false;
+//     }
+//     for two vertices
+//     if (value == 2)
+//     {
+//         int i = 0, j = 1;
+//         while (i < 2)
+//         {
+//             if (arr[i][j] == 1)
+//             {
+//                 i++, j--;
+//             }
+//         }
+
+//     for more multiple vertices
+//     }
+//}
+
+// adjacent vertice
+bool isAdjacent(int (*arr)[maxx], int v1, int v2)
 {
-    int i = 0, j = 1;
-    bool flag = true;
-    int arra[value - 1];
-    for (int ind = 0; ind < (value - 1); ind++)
+    if (arr[v1 - 1][v2 - 1] == 1)
     {
-        arra[ind] = 1;
+        return true;
     }
-    while (i < value && j < value)
-    {
-        if (arr[i][j] == 1)
-        {
-            arra[j - 1] = 0;
-            j++;
-            if (i > 0)
-                i--;
-        }
-        else
-        {
-            i++;
-        }
-    }
-    for (int n = 0; n < (value - 1); n++)
-    {
-        if (arra[n] == 1)
-        {
-            flag = false;
-            break;
-        }
-    }
-    if (flag)
-        cout << "Graph is connected \n";
-    else
-        cout << "Graph isn't connected \n";
+    return false;
 }
 
-// to check wheather we can start with a vertice and come back to it without repition of edges
-bool isCyclic(int value, int (*arr)[maxx])
+// neighbour
+int neighbour(int (*arr)[maxx], int vertex, int idx, int totalVertices)
 {
-    if (value <= 1)
+    int count = 0;
+    if (idx < totalVertices)
     {
-        cout << "Since there is only 1 vertex, hence no cycle exists";
-        return false;
-    }
-    // for two vertices
-    if (value == 2)
-    {
-        int i = 0, j = 1;
-        while (i < 2)
+        if (arr[vertex - 1][idx] == 1)
         {
-            if (arr[i][j] == 1)
-            {
-                i++, j--;
-            }
+            count++;
+            cout << "vertex " << (idx + 1) << "\n";
         }
+        neighbour(arr, vertex, idx += 1, totalVertices);
     }
-
-    // for more multiple vertices
+    return count;
 }
-
 int main()
 {
     int input, vertices;
@@ -186,7 +175,7 @@ int main()
         plot_Graph(vertices, arra);
         while (flag)
         {
-            cout << "Enter => : 1 To Find Degree of a vertex \n 2 : Find Sum of Degree \n 3 : To find path b/w two vertices \n 4 : To Find connected or not \n 5 : Cyclic or Acyclic \n 6 : To Display \n 7 : Exit \n";
+            cout << "Enter => : 1 To Find Degree of a vertex \n 2 : Find Sum of Degree \n 3 : To Display \n 4 : To Find Adjacent \n 5 : To Find Neighbour \n 6 : Exit \n";
             cin >> input;
             if (input == 1)
             {
@@ -200,15 +189,43 @@ int main()
             {
                 degree_Sum(vertices, arra);
             }
-            else if (input == 4)
-            {
-                connection(vertices, arra);
-            }
-            else if (input == 6)
+            else if (input == 3)
             {
                 display(vertices, arra);
             }
-            else if (input == 7)
+            else if (input == 4)
+            {
+                int v1, v2;
+                do
+                {
+                    cout << "Enter Vertex 1, vertex must lie in a range from 1 to " << vertices << "\n";
+                    cin >> v1;
+                } while (v1 > vertices || v1 < 1);
+                do
+                {
+                    cout << "Enter Vertex 2, vertex must lie in a range from 1 to " << vertices << "\n";
+                    cin >> v2;
+                } while (v2 > vertices || v2 < 1);
+
+                cout << (isAdjacent(arra, v1, v2) ? "Vertices are adjacent\n" : "Not Adjacent\n");
+            }
+            else if (input == 5)
+            {
+                int vertex;
+                cout << "Enter Vertex of which you find neighbours ";
+                cin >> vertex;
+                if (vertex > vertices || vertex < 1)
+                {
+                    cout << "Vertex doesn't exists ";
+                }
+                cout << "The Neighbour of Vertex " << vertex << " are : \n";
+                int exists = neighbour(arra, vertex, 0, vertices);
+                if (exists == 0)
+                {
+                    cout << 0 << "\n";
+                }
+            }
+            else if (input == 6)
             {
                 flag = false;
                 cout << "Program Exits ";
