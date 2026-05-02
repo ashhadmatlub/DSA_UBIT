@@ -23,6 +23,16 @@ void addVertex(Vertex *&curr, int data)
 {
     if (curr == NULL)
     {
+        Vertex *point = Graph; // constraints so the same vertex will not be entered twice
+        while (point != NULL)
+        {
+            if (point->data == data)
+            {
+                cout << "Vertice already exists with the same name\n";
+                return;
+            }
+            point = point->next;
+        }
         Vertex *temp = new Vertex;
         temp->data = data;
         temp->next = NULL;
@@ -41,17 +51,18 @@ void addVertex(Vertex *&curr, int data)
 void display()
 {
     Vertex *curr;
-    // Edge *edgeCurr;
+    Edge *edgeCurr;
     curr = Graph;
     while (curr != NULL)
     {
         cout << curr->data;
         if (curr->edgeList != NULL)
         {
-            while (curr->edgeList != NULL)
+            edgeCurr = curr->edgeList;
+            while (edgeCurr != NULL)
             {
-                cout << " => " << curr->edgeList->v->data;
-                curr->edgeList = curr->edgeList->next;
+                cout << " => " << edgeCurr->v->data;
+                edgeCurr = edgeCurr->next;
             }
         }
         cout << "\n";
@@ -115,13 +126,24 @@ void addEdge(int v1, int v2)
     }
     if (ver1 == NULL)
     {
-        cout << "Vertex" << v1 << "doesn't exists, can't draw edge";
+        cout << "Vertex " << v1 << " doesn't exists, can't draw edge";
         return;
     }
     if (ver2 == NULL)
     {
-        cout << "Vertex" << v2 << "doesn't exists can't draw edge";
+        cout << "Vertex " << v2 << " doesn't exists can't draw edge";
         return;
+    }
+
+    Edge *point = ver1->edgeList; // constraints ..
+    while (point != NULL)
+    {
+        if (point->v->data == v2)
+        {
+            cout << "There is already an edge existing between these two vertices \n";
+            return;
+        }
+        point = point->next;
     }
 
     Edge *temp = new Edge;
@@ -131,14 +153,15 @@ void addEdge(int v1, int v2)
     if (ver1->edgeList == NULL)
     {
         ver1->edgeList = temp;
+        cout << "Edge Drawn Successfully \n";
         return;
     }
     Edge *edgeCurr = ver1->edgeList;
-    while (edgeCurr != NULL)
+    while (edgeCurr->next != NULL)
     {
         edgeCurr = edgeCurr->next;
     }
-    edgeCurr = temp;
+    edgeCurr->next = temp;
 
     cout << "Edge Drawn Successfully \n";
 }
@@ -160,7 +183,6 @@ int main()
             cout << "Enter Vertex in numbers : \n";
             cin >> data;
             addVertex(Graph, data);
-            display();
         }
         else if (choice == 2)
         {
@@ -168,7 +190,6 @@ int main()
             cout << "Enter Vertex Number you want to delete ";
             cin >> value;
             removeVertex(value);
-            display();
         }
         else if (choice == 3)
         {
@@ -221,7 +242,7 @@ int main()
         }
         else if (choice == 14)
         {
-            // Display Graph
+            display();
         }
         else if (choice == 0)
         {
