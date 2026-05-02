@@ -86,6 +86,9 @@ void removeVertex(int data)
     cout << "Vertex doesn't exists\n";
 }
 
+void addEdge()
+{
+}
 int main()
 {
     int choice;
