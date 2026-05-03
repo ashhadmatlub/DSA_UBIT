@@ -82,19 +82,22 @@ void removeVertex(int data)
         return;
     }
 
-    removeAllEdge(data);
+    // removeAllEdge(data);
 
     Vertex *temp;
     if (Graph->data == data)
     {
         temp = Graph;
+        if (Graph->edgeList != NULL)
+            removeAllEdge(Graph->data); // this will remove the vertex address from other vertice list
+        // like if we delete  v1 so we check whether v1 is the outgoing vertice of any other if yes then delete them also
         Graph = Graph->next;
         delete (temp);
         cout << "Vertex " << data << " Deleted Successfully\n";
-        // removeAllEdge(Graph->data);
         return;
     }
-    Vertex *prev = Graph;
+
+    Vertex *prev = Graph; // to travers in other vertices
     Vertex *cur = Graph->next;
     while (cur != NULL)
     {
@@ -102,10 +105,12 @@ void removeVertex(int data)
         {
             temp = cur;
             prev->next = cur->next;
+            if (cur->edgeList != NULL)
+                removeAllEdge(cur->data); // this will remove the vertex address from other vertice list
+            // like if we delete  v1 so we check whether v1 is the outgoing vertice of any other if yes then delete them also
             cur = cur->next;
             delete (temp);
             cout << "Vertex " << data << " Deleted Successfully\n";
-            // removeAllEdge(cur->data);
             return;
         }
         cur = cur->next;
@@ -251,7 +256,7 @@ void removeAllEdge(int v1)
 
                 Edge *del = curr;
                 curr = curr->next;
-                delete del;
+                delete (del);
             }
             else
             {
@@ -265,7 +270,7 @@ void removeAllEdge(int v1)
     }
 }
 
-int inDegree(int v1)
+int inDegree(int v1) // find inDegree, which means tells how many vertex terminal point is this
 {
     if (Graph == NULL)
     {
@@ -296,7 +301,7 @@ int inDegree(int v1)
     return count;
 }
 
-int outDegree(int v1)
+int outDegree(int v1) // find inDegree, which means tells how many vertex initial point is this
 {
     if (Graph == NULL)
     {
@@ -334,7 +339,7 @@ int outDegree(int v1)
     return count;
 }
 
-int degree()
+int degree() // total edges it works fine for undirected
 {
     Vertex *temp = Graph;
     Edge *edgeCurr;
@@ -390,9 +395,9 @@ void neighbour(int v1)
         cout << "No Vertice exists\n";
         return;
     }
-    Vertex *temp = Graph;
+    Vertex *temp = Graph; // for inDegree neighbours / terminal / incoming edges
     Edge *edgeCurr;
-    bool flag = false;
+    bool flag = false, flag1 = false;
     while (temp != NULL)
     {
         if (temp->data == v1)
@@ -401,19 +406,44 @@ void neighbour(int v1)
             flag = true;
             if (edgeCurr == NULL)
             {
-                cout << "No Neighbours";
-                return;
+                // cout << "No Neighbours";
+                break;
+                // return;
             }
-            break;
+            // break;
         }
         temp = temp->next;
     }
-    if (!flag)
+
+    temp = Graph; // for outDegree Neighbours / initial / outgoing edges
+    Edge *edgePointer = edgeCurr;
+    cout << "Neighbours of Vertex " << v1 << " are => : ";
+    while (temp != NULL)
     {
-        cout << "Vertex doesn't exists\n";
+        edgePointer = temp->edgeList;
+        if (edgeCurr == NULL)
+        {
+            temp = temp->next;
+            continue;
+        }
+        while (edgePointer != NULL)
+        {
+            if (edgePointer->v->data == v1)
+            {
+                flag1 = true;
+                cout << " v" << temp->data << ", ";
+            }
+            edgePointer = edgePointer->next;
+        }
+        temp = temp->next;
+    }
+
+    if (!flag && !flag1)
+    {
+        cout << "none\n";
         return;
     }
-    cout << "Neighbours of Vertex " << v1 << " are => : ";
+
     while (edgeCurr != NULL)
     {
         cout << "v" << edgeCurr->v->data << ", ";
