@@ -268,6 +268,71 @@ void removeAllEdge(int v1)
     }
 }
 
+int inDegree(int v1)
+{
+    if (Graph == NULL)
+    {
+        cout << "No Vertice exists\n";
+    }
+    Vertex *temp = Graph;
+    Edge *edgeCurr;
+    int count = 0;
+    while (temp != NULL)
+    {
+        edgeCurr = temp->edgeList;
+        if (edgeCurr == NULL)
+        {
+            temp = temp->next;
+            continue;
+        }
+        while (edgeCurr != NULL)
+        {
+            if (edgeCurr->v->data == v1)
+            {
+                count++;
+            }
+            edgeCurr = edgeCurr->next;
+        }
+        temp = temp->next;
+    }
+    return count;
+}
+
+int outDegree(int v1)
+{
+    if (Graph == NULL)
+    {
+        cout << "No Vertice exists\n";
+    }
+    Vertex *temp = Graph;
+    Edge *edgeCurr;
+    bool flag = false;
+    int count = 0;
+    while (temp != NULL)
+    {
+        if (temp->data == v1)
+        {
+            edgeCurr = temp->edgeList;
+            flag = true;
+            if (edgeCurr == NULL)
+            {
+                return count;
+            }
+            break;
+        }
+    }
+    if (!flag)
+    {
+        cout << "Vertex doesn't exists\n";
+        return count;
+    }
+    while (edgeCurr != NULL)
+    {
+        count++;
+        edgeCurr = edgeCurr->next;
+    }
+    return count;
+}
 int main()
 {
     int choice;
@@ -280,7 +345,7 @@ int main()
         cout << "Enter your choice: ";
         cin >> choice;
 
-        if (choice == 1) // done 
+        if (choice == 1) // done
         {
             int data;
             cout << "Enter Vertex in numbers : \n";
@@ -312,17 +377,24 @@ int main()
             cin >> v2;
             removeEdge(v1, v2);
         }
-        else if (choice == 5)
+        else if (choice == 5) // undone
         {
-            // Find Degree
         }
-        else if (choice == 6)
+        else if (choice == 6) // done
         {
-            // Find In-Degree
+            int v1;
+            cout << "Enter Vertex to find its inDegree : ";
+            cin >> v1;
+            int degree = inDegree(v1);
+            cout << "Indegree of Vertex " << v1 << " is => " << degree << "\n";
         }
-        else if (choice == 7)
+        else if (choice == 7) // done
         {
-            // Find Out-Degree
+            int v1;
+            cout << "Enter Vertex to find its outDegree : ";
+            cin >> v1;
+            int degree = inDegree(v1);
+            cout << "Outdegree of Vertex " << v1 << " is => " << degree << "\n";
         }
         else if (choice == 8)
         {
