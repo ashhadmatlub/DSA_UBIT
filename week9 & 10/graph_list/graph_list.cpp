@@ -71,6 +71,8 @@ void display()
     return;
 }
 
+void removeAllEdge(int v1);
+
 void removeVertex(int data)
 {
 
@@ -79,13 +81,17 @@ void removeVertex(int data)
         cout << "There are no Vertices \n";
         return;
     }
+
+    removeAllEdge(data);
+
     Vertex *temp;
     if (Graph->data == data)
     {
         temp = Graph;
         Graph = Graph->next;
         delete (temp);
-        cout << data << "Deleted Successfully\n";
+        cout << "Vertex " << data << " Deleted Successfully\n";
+        // removeAllEdge(Graph->data);
         return;
     }
     Vertex *prev = Graph;
@@ -98,7 +104,8 @@ void removeVertex(int data)
             prev->next = cur->next;
             cur = cur->next;
             delete (temp);
-            cout << data << " Deleted Successfully \n";
+            cout << "Vertex " << data << " Deleted Successfully\n";
+            // removeAllEdge(cur->data);
             return;
         }
         cur = cur->next;
@@ -165,6 +172,102 @@ void addEdge(int v1, int v2)
 
     cout << "Edge Drawn Successfully \n";
 }
+
+void removeEdge(int v1, int v2)
+{
+    Vertex *curr = Graph; // pointer
+    Vertex *ver1 = NULL;  // to hold the address
+    Vertex *ver2 = NULL;
+    while (curr != NULL)
+    {
+        if (curr->data == v1)
+        {
+            ver1 = curr;
+        }
+        if (curr->data == v2)
+        {
+            ver2 = curr;
+        }
+        curr = curr->next;
+    }
+    if (ver1 == NULL || ver1->edgeList == NULL)
+    {
+        cout << "Vertex " << v1 << " doesn't exists or there are no Edges of Vertex " << v1;
+        return;
+    }
+    if (ver2 == NULL)
+    {
+        cout << "Vertex " << v2 << " doesn't exists can't draw edge";
+        return;
+    }
+
+    // Edge *edgeCurr = ver1->edgeList;
+    if (ver1->edgeList->v->data == v2)
+    {
+        Edge *temp = ver1->edgeList;
+        ver1->edgeList = ver1->edgeList->next;
+        // ver1->edgeList = edgeCurr;
+        delete (temp);
+        cout << v2 << " Deleted successfully\n";
+        return;
+    }
+
+    Edge *edgeCurr = ver1->edgeList->next;
+    Edge *edgePrev = ver1->edgeList;
+    while (edgeCurr != NULL)
+    {
+        if (edgeCurr->v->data == v2)
+        {
+            edgePrev->next = edgeCurr->next;
+            Edge *temp = edgeCurr;
+            edgeCurr = edgeCurr->next;
+            delete (temp);
+            cout << v2 << " Deleted successfully\n";
+            return;
+        }
+        edgeCurr = edgeCurr->next;
+        edgePrev = edgePrev->next;
+    }
+    return;
+}
+
+// it will remove all the edges of the vertex which is deleted.
+void removeAllEdge(int v1)
+{
+    Vertex *temp = Graph;
+
+    while (temp != NULL)
+    {
+        Edge *curr = temp->edgeList;
+        Edge *prev = NULL;
+
+        while (curr != NULL)
+        {
+            if (curr->v->data == v1)
+            {
+                if (prev == NULL)
+                    temp->edgeList = curr->next;
+                else
+                {
+                    prev->next = curr->next;
+                }
+
+                Edge *del = curr;
+                curr = curr->next;
+                delete del;
+            }
+            else
+            {
+                prev = curr;
+                // prev = prev->next;
+                curr = curr->next;
+            }
+        }
+
+        temp = temp->next;
+    }
+}
+
 int main()
 {
     int choice;
@@ -177,21 +280,21 @@ int main()
         cout << "Enter your choice: ";
         cin >> choice;
 
-        if (choice == 1)
+        if (choice == 1) // done 
         {
             int data;
             cout << "Enter Vertex in numbers : \n";
             cin >> data;
             addVertex(Graph, data);
         }
-        else if (choice == 2)
+        else if (choice == 2) // done
         {
             int value;
             cout << "Enter Vertex Number you want to delete ";
             cin >> value;
             removeVertex(value);
         }
-        else if (choice == 3)
+        else if (choice == 3) // done
         {
             int v1, v2;
             cout << "Enter Vertex 1 : ";
@@ -200,9 +303,14 @@ int main()
             cin >> v2;
             addEdge(v1, v2);
         }
-        else if (choice == 4)
+        else if (choice == 4) // done
         {
-            // Remove Edge
+            int v1, v2;
+            cout << "Enter Vertex 1 : ";
+            cin >> v1;
+            cout << "Enter Vertex 2 : ";
+            cin >> v2;
+            removeEdge(v1, v2);
         }
         else if (choice == 5)
         {
