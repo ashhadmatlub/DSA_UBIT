@@ -114,23 +114,30 @@ void removeVertex(int data)
     cout << "Vertex doesn't exists\n";
 }
 
+// it tells the vertex exists or not , this is also known as helper method
+Vertex *checkVertexExistence(int v1)
+{
+    Vertex *curr = Graph;
+    Vertex *ver = NULL; // to hold the address
+    while (curr != NULL)
+    {
+        if (curr->data == v1)
+        {
+            ver = curr;
+            return ver;
+        }
+        curr = curr->next;
+    }
+    return ver;
+}
+
 void addEdge(int v1, int v2)
 {
     Vertex *curr = Graph; // pointer
     Vertex *ver1 = NULL;  // to hold the address
     Vertex *ver2 = NULL;
-    while (curr != NULL)
-    {
-        if (curr->data == v1)
-        {
-            ver1 = curr;
-        }
-        if (curr->data == v2)
-        {
-            ver2 = curr;
-        }
-        curr = curr->next;
-    }
+    ver1 = checkVertexExistence(v1);
+    ver2 = checkVertexExistence(v2);
     if (ver1 == NULL)
     {
         cout << "Vertex " << v1 << " doesn't exists, can't draw edge";
@@ -178,18 +185,8 @@ void removeEdge(int v1, int v2)
     Vertex *curr = Graph; // pointer
     Vertex *ver1 = NULL;  // to hold the address
     Vertex *ver2 = NULL;
-    while (curr != NULL)
-    {
-        if (curr->data == v1)
-        {
-            ver1 = curr;
-        }
-        if (curr->data == v2)
-        {
-            ver2 = curr;
-        }
-        curr = curr->next;
-    }
+    ver1 = checkVertexExistence(v1);
+    ver2 = checkVertexExistence(v2);
     if (ver1 == NULL || ver1->edgeList == NULL)
     {
         cout << "Vertex " << v1 << " doesn't exists or there are no Edges of Vertex " << v1;
@@ -273,6 +270,7 @@ int inDegree(int v1)
     if (Graph == NULL)
     {
         cout << "No Vertice exists\n";
+        return 0;
     }
     Vertex *temp = Graph;
     Edge *edgeCurr;
@@ -303,6 +301,7 @@ int outDegree(int v1)
     if (Graph == NULL)
     {
         cout << "No Vertice exists\n";
+        return 0;
     }
     Vertex *temp = Graph;
     Edge *edgeCurr;
@@ -320,6 +319,7 @@ int outDegree(int v1)
             }
             break;
         }
+        temp = temp->next;
     }
     if (!flag)
     {
@@ -333,6 +333,95 @@ int outDegree(int v1)
     }
     return count;
 }
+
+int degree()
+{
+    Vertex *temp = Graph;
+    Edge *edgeCurr;
+    int count = 0;
+    while (temp != NULL)
+    {
+        edgeCurr = temp->edgeList;
+        while (edgeCurr != NULL)
+        {
+            count++;
+            edgeCurr = edgeCurr->next;
+        }
+        temp = temp->next;
+    }
+    return count;
+}
+
+bool isAdjacent(int v1, int v2, bool flag)
+{
+    Vertex *curr = Graph;
+    Vertex *ver1 = NULL;
+    Vertex *ver2 = NULL;
+    ver1 = checkVertexExistence(v1);
+    ver2 = checkVertexExistence(v2);
+    // count++;
+
+    if (ver1 == NULL || ver2 == NULL)
+    {
+        cout << "Vertex " << v1 << " or " << v2 << " doesn't exists";
+        return false;
+    }
+
+    Edge *temp = ver1->edgeList;
+    while (temp != NULL)
+    {
+        if (temp->v->data == v2)
+        {
+            return true;
+        }
+        temp = temp->next;
+    }
+    if (!flag)
+    {
+        return isAdjacent(v2, v1, true);
+    }
+    return false;
+}
+
+void neighbour(int v1)
+{
+    if (Graph == NULL)
+    {
+        cout << "No Vertice exists\n";
+        return;
+    }
+    Vertex *temp = Graph;
+    Edge *edgeCurr;
+    bool flag = false;
+    while (temp != NULL)
+    {
+        if (temp->data == v1)
+        {
+            edgeCurr = temp->edgeList;
+            flag = true;
+            if (edgeCurr == NULL)
+            {
+                cout << "No Neighbours";
+                return;
+            }
+            break;
+        }
+        temp = temp->next;
+    }
+    if (!flag)
+    {
+        cout << "Vertex doesn't exists\n";
+        return;
+    }
+    cout << "Neighbours of Vertex " << v1 << " are => : ";
+    while (edgeCurr != NULL)
+    {
+        cout << "v" << edgeCurr->v->data << ", ";
+        edgeCurr = edgeCurr->next;
+    }
+    return;
+}
+
 int main()
 {
     int choice;
@@ -371,14 +460,17 @@ int main()
         else if (choice == 4) // done
         {
             int v1, v2;
+            cout << "To Delete Edge \n";
             cout << "Enter Vertex 1 : ";
             cin >> v1;
             cout << "Enter Vertex 2 : ";
             cin >> v2;
             removeEdge(v1, v2);
         }
-        else if (choice == 5) // undone
+        else if (choice == 5) // done
         {
+            int sumDegree = degree();
+            cout << "The Degree of the Graph is " << sumDegree;
         }
         else if (choice == 6) // done
         {
@@ -393,7 +485,7 @@ int main()
             int v1;
             cout << "Enter Vertex to find its outDegree : ";
             cin >> v1;
-            int degree = inDegree(v1);
+            int degree = outDegree(v1);
             cout << "Outdegree of Vertex " << v1 << " is => " << degree << "\n";
         }
         else if (choice == 8)
@@ -408,23 +500,32 @@ int main()
         {
             // Check Connected
         }
-        else if (choice == 11)
+        else if (choice == 11) // done
         {
-            // Check Adjacent
+            int v1, v2;
+            cout << "To Find Ajacency \n";
+            cout << "Enter Vertex 1 : ";
+            cin >> v1;
+            cout << "Enter Vertex 2 : ";
+            cin >> v2;
+            cout << (isAdjacent(v1, v2, false) ? "Vertices are adjacent\n" : "Not Adjacent\n");
         }
-        else if (choice == 12)
+        else if (choice == 12) // done
         {
-            // Find Neighbours
+            int value;
+            cout << "Enter Vertex of which you find Neighbour : ";
+            cin >> value;
+            neighbour(value);
         }
         else if (choice == 13)
         {
             // Search Vertex
         }
-        else if (choice == 14)
+        else if (choice == 14) // done
         {
             display();
         }
-        else if (choice == 0)
+        else if (choice == 0) // done
         {
             cout << "Exiting program...\n";
             break;
