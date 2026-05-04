@@ -1,16 +1,22 @@
 #include <iostream>
+#include <stack>
 #include <stdio.h>
 #include <stdlib.h>
 
 using namespace std;
 
+stack<int> path;
+stack<int> result;
+
 struct Edge;
+bool flag; // for isConnected
 
 struct Vertex
 {
     int data;
     Vertex *next;
     Edge *edgeList;
+    bool flag = false;
 } *Graph = NULL;
 
 struct Edge
@@ -452,6 +458,143 @@ void neighbour(int v1)
     return;
 }
 
+bool depthFirst(Vertex *v1, Vertex *v2)
+{
+    v1->flag = true;
+
+    path.push(v1->data);
+
+    if (v1 == v2)
+    {
+
+        stack<int> temp = path;
+        while (!temp.empty())
+        {
+            result.push(temp.top());
+            temp.pop();
+        }
+        return true;
+    }
+
+    Edge *edge = v1->edgeList;
+
+    while (edge != NULL)
+    {
+        if (!edge->v->flag)
+        {
+            if (depthFirst(edge->v, v2))
+                return true;
+        }
+        edge = edge->next;
+    }
+
+    path.pop();
+
+    return false;
+}
+
+void resetFlag()
+{
+    Vertex *temp = Graph;
+    while (temp != NULL)
+    {
+        temp->flag = false;
+        temp = temp->next;
+    }
+}
+
+bool pathFinder(int v1, int v2) // ..................
+{
+    Vertex *curr = Graph;
+    Vertex *ver1 = NULL;
+    Vertex *ver2 = NULL;
+    ver1 = checkVertexExistence(v1);
+    ver2 = checkVertexExistence(v2);
+    // count++;
+
+    if (ver1 == NULL || ver2 == NULL)
+    {
+        cout << "Vertex " << v1 << " or " << v2 << " doesn't exists";
+        return false;
+    }
+
+    resetFlag();
+    while (!path.empty())
+        path.pop();
+    while (!result.empty())
+        result.pop();
+
+    if (depthFirst(ver1, ver2) && flag == false)
+    {
+        cout << "Path: ";
+
+        // print correct order
+        while (!result.empty())
+        {
+            cout << result.top() << " ";
+            result.pop();
+        }
+        return true;
+    }
+    else if (flag == false)
+    {
+        cout << "No path exists\n";
+        return false;
+    }
+    if (depthFirst(ver1, ver2) && flag == true)
+    {
+        // cout << "Path: ";
+
+        // // print correct order
+        // while (!result.empty())
+        // {
+        //     cout << result.top() << " ";
+        //     result.pop();
+        // }
+        return true;
+    }
+    else if (flag == true)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+
+bool isConnected(Vertex *v1, Vertex *v2, int totalVertices, int count, int total)
+{
+    bool flag1;
+    flag1 = pathFinder(v1->data, v2->data);
+    if (flag1 == false)
+    {
+        count++;
+        // Vertex *temp = v1;
+        // v1 = v2;
+        // v2 = temp;
+        isConnected(v2, v1, totalVertices, count, total);
+        if (count == 2)
+        {
+            return false;
+        }
+    }
+
+    Vertex *temp = v1;
+    v1 = v2;
+    v2 = temp;
+    v2 = v2->next;
+    total++;
+    if (total != totalVertices)
+    {
+        isConnected(v1, v2, totalVertices, 0, total);
+    }
+    else
+    {
+        return true;
+    }
+}
+
 int main()
 {
     int choice;
@@ -518,9 +661,16 @@ int main()
             int degree = outDegree(v1);
             cout << "Outdegree of Vertex " << v1 << " is => " << degree << "\n";
         }
-        else if (choice == 8)
+        else if (choice == 8) // done
         {
-            // Find Path
+            int v1, v2;
+            flag = false; // for connection purpose
+            cout << "To Find Path \n";
+            cout << "Enter Vertex 1 : ";
+            cin >> v1;
+            cout << "Enter Vertex 2 : ";
+            cin >> v2;
+            pathFinder(v1, v2);
         }
         else if (choice == 9)
         {
@@ -528,7 +678,14 @@ int main()
         }
         else if (choice == 10)
         {
-            // Check Connected
+            flag = true;
+            int value;
+            Vertex *temp = Graph;
+            Vertex *temp1 = Graph->next;
+            cout << "Enter total no. of vertices ";
+            cin >> value;
+            bool yes = isConnected(temp, temp1, value, 0, 1);
+            cout << ((yes) ? "Connected\n" : "Not Connected\n");
         }
         else if (choice == 11) // done
         {
