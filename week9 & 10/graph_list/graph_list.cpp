@@ -600,17 +600,17 @@ bool isCycle(Vertex *v1, Vertex *v2, int count, int vertice)
     count++;
     bool flag = false;
     flag = pathFinder(v1->data, v2->data);
-    if (flag)
+    if (!flag && count < vertice)
     {
-        return true;
+        v1 = v1->next;
+        v2 = v2->next;
+        return isCycle(v1, v2, count, vertice);
     }
-    v1 = v1->next;
-    v2 = v2->next;
     if (count == vertice)
     {
         return false;
     }
-    isCycle(v1, v2, count, vertice);
+    return false;
 }
 
 int main()
