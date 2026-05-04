@@ -595,6 +595,24 @@ bool isConnected(Vertex *v1, Vertex *v2, int totalVertices, int count, int total
     }
 }
 
+bool isCycle(Vertex *v1, Vertex *v2, int count, int vertice)
+{
+    count++;
+    bool flag = false;
+    flag = pathFinder(v1->data, v2->data);
+    if (flag)
+    {
+        return true;
+    }
+    v1 = v1->next;
+    v2 = v2->next;
+    if (count == vertice)
+    {
+        return false;
+    }
+    isCycle(v1, v2, count, vertice);
+}
+
 int main()
 {
     int choice;
@@ -672,11 +690,17 @@ int main()
             cin >> v2;
             pathFinder(v1, v2);
         }
-        else if (choice == 9)
+        else if (choice == 9) // done
         {
-            // Check Cyclic
+            flag = false;
+            int value;
+            Vertex *temp = Graph;
+            cout << "Enter total no. of vertices ";
+            cin >> value;
+            bool check = isCycle(temp, temp, 0, value);
+            cout << ((check) ? "Cyclic\n" : "Not Connected\n");
         }
-        else if (choice == 10)
+        else if (choice == 10) // done
         {
             flag = true;
             int value;
