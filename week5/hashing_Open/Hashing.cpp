@@ -52,6 +52,69 @@ void insert(int value)
     }
 }
 
+void del(int value) // under process
+{
+    int ind = value % 10; // % size
+    bool flag = false;
+    if (HT[ind].flag == false)
+    {
+        cout << "Value doesn't exist";
+        return;
+    }
+    if (HT[ind].data == value) // to delete the array item / override
+    {
+        if (HT[ind].next == NULL)
+        {
+            // HT[ind].data = NULL;
+            HT[ind].flag = false;
+            cout << HT[ind].data << "Deleted Successfully\n";
+            return;
+        }
+        HT[ind].data = HT[ind].next->data; // replacing the first element
+        MultiNode *curr = HT[ind].next;
+        while (curr->next != NULL)
+        {
+            curr->data = curr->next->data; // coping the data from 1 to 0 , 2 to 1 , 3 to 2
+            // so in this manner if last lists data is empty i will delete that data ;
+            curr = curr->next;
+        }
+        delete (curr);
+        return;
+    }
+    if (HT[ind].next->data == value) // to delete head of the list
+    {
+        MultiNode *temp = HT[ind].next;
+        HT[ind].next = HT[ind].next->next; // so the list head pointer changes
+        cout << temp->data << "Deleted Successfully\n";
+        delete (temp);
+        return;
+    }
+
+    MultiNode *prev = HT[ind].next;
+    MultiNode *curr = HT[ind].next->next;
+    while (curr != NULL)
+    {
+        if (curr->data == value)
+        {
+            MultiNode *temp = curr;
+            prev->next = curr->next;
+            curr = curr->next;
+            flag = true;
+            free(temp);
+        }
+        curr = curr->next;
+        prev = prev->next;
+    }
+    if (flag)
+    {
+        cout << value << " Deleted Successfully\n ";
+    }
+    else
+    {
+        cout << "Value doesn't exist";
+    }
+}
+
 void search(int value)
 {
     int index = value % 10;
@@ -94,6 +157,30 @@ void search(int value)
 }
 void display()
 {
+    int i = 0;
+    while (i < size(HT))
+    {
+        if (HT[i].flag == false)
+        {
+            i++;
+            continue;
+        }
+        cout << HT[i].data;
+        MultiNode *curr = HT[i].next;
+        if (curr == NULL)
+        {
+            i++;
+            cout << "\n";
+            continue;
+        }
+        while (curr != NULL)
+        {
+            cout << " => " << curr->data;
+            curr = curr->next;
+        }
+        cout << "\n";
+        i++;
+    }
 }
 int main()
 {
@@ -103,7 +190,7 @@ int main()
 
     while (flag)
     {
-        cout << " 1: For Insert, " << "2: To Search, " << "3 : To Display ," << "4 : For Exit: ";
+        cout << " 1: For Insert " << "2: To Search " << "3 : To Delete " << "4 : To Display " << "5 : For Exit ";
         cin >> input;
 
         if (input == 1)
@@ -120,9 +207,15 @@ int main()
         }
         else if (input == 3)
         {
-            display();
+            cout << "Enter value to Delete";
+            cin >> value;
+            del(value);
         }
         else if (input == 4)
+        {
+            display();
+        }
+        else if (input == 5)
         {
             cout << "Program Exits ..... !";
             flag = false;
