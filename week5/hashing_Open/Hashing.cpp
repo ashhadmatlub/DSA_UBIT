@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// seprate chaining
 struct MultiNode
 {
     int data;
@@ -31,8 +32,9 @@ void insert(int value)
     }
     else
     {
-        MultiNode *temp;
-        temp = (MultiNode *)malloc(sizeof(MultiNode));
+        // MultiNode *temp;
+        // temp = (MultiNode *)malloc(sizeof(MultiNode));
+        MultiNode *temp = new MultiNode;
         temp->data = value;
         temp->next = NULL;
         MultiNode *curr = HT[index].next;
@@ -45,7 +47,8 @@ void insert(int value)
         {
             curr = curr->next;
         }
-        HT[index].next = temp;
+        curr->next = temp;
+        // HT[index].next = temp;
     }
 }
 
@@ -59,37 +62,34 @@ void search(int value)
         cout << "Value not Found \n ";
         return;
     }
-    if (HT[index].flag == true)
+    if (HT[index].data == value) // it checks the data which is in array, not in the list
     {
-        if (HT[index].data == value)
-        {
-            cout << value << ": Found \n";
-            return;
-        }
+        cout << value << ": Found \n";
+        return;
+    }
 
-        MultiNode *cur = HT[index].next;
+    MultiNode *cur = HT[index].next;
+    if (cur->data == value) // it checks the head of the list
+    {
+        cout << value << ": Found \n";
+        return;
+    }
+    while (cur != NULL)
+    {
+        cur = cur->next;
         if (cur->data == value)
         {
-            cout << value << ": Found \n";
-            return;
+            flag1 = false;
+            break;
         }
-        while (cur != NULL)
-        {
-            cur = cur->next;
-            if (cur->data == value)
-            {
-                flag1 = false;
-                break;
-            }
-        }
-        if (flag1)
-        {
-            cout << value << ": Found \n";
-        }
-        else
-        {
-            cout << value << ": Not Found \n";
-        }
+    }
+    if (!flag1) // personal review .. just this  ( !  means ( not ) cause me a great trouble ) cuz i didnt use it, and i was thinking that there is an error in my insert function ;
+    {
+        cout << value << ": Found \n";
+    }
+    else
+    {
+        cout << "Value Not Found \n";
     }
 }
 void display()
@@ -124,6 +124,7 @@ int main()
         }
         else if (input == 4)
         {
+            cout << "Program Exits ..... !";
             flag = false;
         }
         else
