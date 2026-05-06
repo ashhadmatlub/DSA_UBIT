@@ -11,29 +11,48 @@ struct Node
     Node *next;
 };
 
-Node *curr = NULL;
+Node *stack = NULL;
 
 void push(int value)
 {
     Node *temp;
     temp = (Node *)malloc(sizeof(Node));
     temp->data = value;
-    temp->next = curr;
-    curr = temp;
+    temp->next = NULL;
+    if (stack == NULL)
+    {
+        stack = temp;
+        return;
+    }
+    Node *curr = stack;
+
+    while (curr->next != NULL)
+    {
+        curr = curr->next;
+    }
+    curr->next = temp;
 }
 
 int pop()
 {
-    if (curr == NULL)
+    if (stack == NULL)
     {
         cout << "Stack underflow ";
         return -1;
     }
-    Node *temp = curr;
-    int value = temp->data;
+    Node *curr = stack;
+    Node *prev = NULL;
+    while (curr ->next!= NULL)
+    {
+        prev = curr;
+        curr = curr->next;
+    }
 
-    curr = curr->next;
-    free(temp);
+    Node *del = curr;
+    int value = curr->data;
+    prev = curr;
+    free(del);
+    // temp = NULL;
     return value;
 }
 
