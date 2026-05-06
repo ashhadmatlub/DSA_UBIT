@@ -52,13 +52,13 @@ void insert(int value)
     }
 }
 
-void del(int value) // under process
+void del(int value) // done
 {
     int ind = value % 10; // % size
     bool flag = false;
     if (HT[ind].flag == false)
     {
-        cout << "Value doesn't exist";
+        cout << "Value doesn't exist\n";
         return;
     }
     if (HT[ind].data == value) // to delete the array item / override
@@ -67,38 +67,50 @@ void del(int value) // under process
         {
             // HT[ind].data = NULL;
             HT[ind].flag = false;
-            cout << HT[ind].data << "Deleted Successfully\n";
+            cout << HT[ind].data << " Deleted Successfully\n";
             return;
         }
-        HT[ind].data = HT[ind].next->data; // replacing the first element
-        MultiNode *curr = HT[ind].next;
-        while (curr->next != NULL)
+        if (HT[ind].next != NULL)
         {
-            curr->data = curr->next->data; // coping the data from 1 to 0 , 2 to 1 , 3 to 2
-            // so in this manner if last lists data is empty i will delete that data ;
-            curr = curr->next;
+
+            HT[ind].data = HT[ind].next->data; // replacing the first element
+            HT[ind].next = HT[ind].next->next;
+            return;
+
+            // while (curr->next != NULL)
+            // {
+            //     prev->data = curr->data; // coping the data from 1 to 0 , 2 to 1 , 3 to 2
+            //     // so in this manner if last lists data is empty i will delete that data ;
+            //     prev = prev->next;
+            //     curr = curr->next;
+            // }
+            // MultiNode *temp = curr;
+            // curr = prev;
+            // delete (temp);
+            // return;
         }
-        delete (curr);
-        return;
     }
     if (HT[ind].next->data == value) // to delete head of the list
     {
         MultiNode *temp = HT[ind].next;
         HT[ind].next = HT[ind].next->next; // so the list head pointer changes
-        cout << temp->data << "Deleted Successfully\n";
+        cout << temp->data << " Deleted Successfully\n";
         delete (temp);
         return;
     }
 
     MultiNode *prev = HT[ind].next;
     MultiNode *curr = HT[ind].next->next;
-    while (curr != NULL)
+    while (curr != NULL) // to delete the item which is in the list
     {
         if (curr->data == value)
         {
             MultiNode *temp = curr;
             prev->next = curr->next;
-            curr = curr->next;
+            if (curr->next != NULL)
+                curr = curr->next;
+            else
+                curr = prev;
             flag = true;
             free(temp);
         }
@@ -111,7 +123,7 @@ void del(int value) // under process
     }
     else
     {
-        cout << "Value doesn't exist";
+        cout << " Value doesn't exist\n";
     }
 }
 
@@ -207,7 +219,7 @@ int main()
         }
         else if (input == 3)
         {
-            cout << "Enter value to Delete";
+            cout << "Enter value to Delete ";
             cin >> value;
             del(value);
         }
