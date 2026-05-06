@@ -8,10 +8,10 @@ using namespace std;
 
 void sortArray(int input[])
 {
-    int temp, j, k = 7;
+    int temp, j, k = 15;
     int l;
 
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < 15; i++)
     {
         j = 0;
         while (j < k - 1)
@@ -35,11 +35,12 @@ void sortArray(int input[])
 }
 int main()
 {
-    int input[7] = {23, 45, 67, 8, 7, 12, 4};
+    int input[15] = {9999, -50, 888, 888, 12, 0, -50, 750, 1000000, 888, -9999, 50, 2, 1};
+    // {23, 45, 67, 8, 7, 12, 4};
 
     sortArray(input);
 
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < 15; i++)
     {
         cout << input[i] << " ";
     }

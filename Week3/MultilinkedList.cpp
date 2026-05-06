@@ -68,7 +68,7 @@ void insertStudents(int CNumber, int SNum)
             }
             else
             {
-                SNode *Scurr = Ccurr;
+                SNode *Scurr = Ccurr->StuList;
                 while (Scurr != NULL)
                 {
                     SNode *scurrent = Ccurr->StuList;

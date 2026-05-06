@@ -108,7 +108,10 @@ void del(int value) // done
             MultiNode *temp = curr;
             prev->next = curr->next;
             if (curr->next != NULL)
+            {
                 curr = curr->next;
+            }
+
             else
                 curr = prev;
             flag = true;
