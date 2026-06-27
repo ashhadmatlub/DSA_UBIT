@@ -216,17 +216,85 @@ AVLNode *search(AVLNode *curr, int value)
     }
     if (value > curr->data)
     {
-        curr = search(curr->right, value);
+        curr->right = search(curr->right, value);
         return curr;
     }
     if (value < curr->data)
     {
-        curr = search(curr->left, value);
+        curr->left = search(curr->left, value);
         return curr;
     }
     else
     {
         cout << "Value found " << curr->data << "\n";
+        return curr;
+    }
+}
+
+AVLNode *del(AVLNode *curr, int value) // left
+{
+    if (curr == nullptr)
+    {
+        cout << "Not Found \n";
+        return curr;
+    }
+
+    if (value > curr->data)
+    {
+        curr->right = del(curr->right, value);
+        return curr;
+    }
+    if (value < curr->data)
+    {
+        curr->left = del(curr->left, value);
+        return curr;
+    }
+    else
+    {
+        if (curr->left == nullptr && curr->right == nullptr)
+        {
+            delete (curr);
+            cout << "Value Deleted successfully \n";
+            return curr;
+        }
+        if (curr->right == nullptr)
+        {
+            AVLNode *temp = curr;
+            curr = curr->left;
+            delete (temp);
+            cout << "Value Deleted successfully \n";
+            return curr;
+        }
+        else
+        {
+            AVLNode *temp = curr;
+            curr = curr->right;
+            AVLNode *temp3 = curr;
+            while (curr->left != nullptr)
+            {
+                curr = curr->left;
+            }
+            if (curr->right != nullptr)
+            {
+                AVLNode *temp2 = curr->right;
+                temp = temp2;
+                curr = temp;
+                while (curr->right != nullptr)
+                {
+                    curr = curr->right;
+                }
+                curr->right = temp3;
+                cout << "Value Deleted successfully \n";
+                return curr;
+            }
+            else
+            {
+                temp = curr;
+                curr->right = temp3;
+                cout << "Value Deleted successfully \n";
+                return curr;
+            }
+        }
         return curr;
     }
 }
@@ -237,7 +305,7 @@ int main()
     bool flag = true;
     while (flag)
     {
-        cout << "Enter =>  1 to Insert , 2 to Display Tree Structure , 3 To Display, 4 To Search , 5 to Exit : \n";
+        cout << "Enter =>  1 to Insert , 2 to Display Tree Structure , 3 To Display, 4 To Search , 5 To Delete, 6 to Exit : \n";
         cin >> choice;
 
         if (choice == 1)
@@ -284,6 +352,13 @@ int main()
             search(treeHead, value);
         }
         else if (choice == 5)
+        {
+            int value;
+            cout << "Enter value to Delete \n";
+            cin >> value;
+            del(treeHead, value);
+        }
+        else if (choice == 6)
         {
             flag = false;
             cout << "Program Exits ... ! ";
