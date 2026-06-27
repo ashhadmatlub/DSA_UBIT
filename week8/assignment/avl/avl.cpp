@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <iomanip>
 using namespace std;
 
 struct AVLNode
@@ -8,22 +9,19 @@ struct AVLNode
     AVLNode *left;
 } *treeHead = nullptr;
 
+int nodeHeight(AVLNode *node)
+{
+    if (node == nullptr)
+        return -1;
+    return node->height;
+}
+
 int heightCalculator(AVLNode *curr)
 {
-    if (curr->right == nullptr && curr->left == nullptr)
-    {
-        return 0;
-    }
-    if (curr->right == nullptr)
-    {
-        return (curr->left->height) + 1;
-    }
-    if (curr->left == nullptr)
-    {
-        return (curr->right->height) + 1;
-    }
+    if (curr == nullptr)
+        return -1;
 
-    return (max(curr->right->height, curr->left->height) + 1);
+    return max(nodeHeight(curr->left), nodeHeight(curr->right)) + 1;
 }
 
 AVLNode *rotateLeft(AVLNode *curr) // means tree is growing from the right side so we rotate it to the left
@@ -38,7 +36,6 @@ AVLNode *rotateLeft(AVLNode *curr) // means tree is growing from the right side 
 
     temp->height = heightCalculator(temp);
     curr->height = heightCalculator(curr);
-    temp2->height = heightCalculator(temp2);
     return curr;
 }
 
@@ -53,7 +50,7 @@ AVLNode *rotateRight(AVLNode *curr) // means tree is growing from the left side,
 
     temp->height = heightCalculator(temp);
     curr->height = heightCalculator(curr);
-    temp2->height = heightCalculator(temp2);
+
     return curr;
 }
 
@@ -93,7 +90,8 @@ AVLNode *insertAVL(AVLNode *curr, int value)
     if (value > curr->data)
     {
         curr->right = insertAVL(curr->right, value);
-        if ((curr->right->height - curr->left->height) > 1)
+        curr->height = heightCalculator(curr);
+        if ((nodeHeight(curr->right) - nodeHeight(curr->left)) > 1)
         {
             if (value > curr->right->data)
             {
@@ -108,7 +106,8 @@ AVLNode *insertAVL(AVLNode *curr, int value)
     else if (value < curr->data)
     {
         curr->left = insertAVL(curr->left, value);
-        if ((curr->left->height - curr->right->height) < 1)
+        curr->height = heightCalculator(curr);
+        if ((nodeHeight(curr->left) - nodeHeight(curr->right)) > 1)
         {
             if (value < curr->left->data)
             {
@@ -129,6 +128,169 @@ AVLNode *insertAVL(AVLNode *curr, int value)
     return curr;
 }
 
+int getHeight(AVLNode *node)
+{
+    if (node == nullptr)
+        return 0;
+    return max(getHeight(node->left), getHeight(node->right)) + 1;
+}
+
+void printLevel(AVLNode *root, int level)
+{
+    if (level == 1)
+    {
+        if (root)
+            cout << setw(4) << root->data;
+        else
+            cout << setw(4) << " ";
+    }
+    else
+    {
+        if (root)
+        {
+            printLevel(root->left, level - 1);
+            printLevel(root->right, level - 1);
+        }
+        else
+        {
+            printLevel(nullptr, level - 1);
+            printLevel(nullptr, level - 1);
+        }
+    }
+}
+
+void displayTree(AVLNode *root)
+{
+    int h = getHeight(root);
+
+    for (int i = 1; i <= h; i++)
+    {
+        int space = (1 << (h - i + 1));
+
+        for (int j = 0; j < space / 2; j++)
+            cout << " ";
+
+        printLevel(root, i);
+
+        cout << "\n\n";
+    }
+}
+
+void PreOrder_Traversal(AVLNode *curr)
+{
+    if (curr != NULL)
+    {
+        cout << " --> " << curr->data;
+        PreOrder_Traversal(curr->left);
+        PreOrder_Traversal(curr->right);
+        cout << "\n";
+    }
+}
+void InOrder_Traversal(AVLNode *curr)
+{
+    if (curr != NULL)
+    {
+        InOrder_Traversal(curr->left);
+        cout << " --> " << curr->data;
+        InOrder_Traversal(curr->right);
+        cout << "\n";
+    }
+}
+void PostOrder_Traversal(AVLNode *curr)
+{
+    if (curr != NULL)
+    {
+        PostOrder_Traversal(curr->left);
+        PostOrder_Traversal(curr->right);
+        cout << " --> " << curr->data;
+        cout << "\n";
+    }
+}
+
+AVLNode *search(AVLNode *curr, int value)
+{
+    if (curr == nullptr)
+    {
+        cout << "Value not Found \n";
+        return curr;
+    }
+    if (value > curr->data)
+    {
+        curr = search(curr->right, value);
+        return curr;
+    }
+    if (value < curr->data)
+    {
+        curr = search(curr->left, value);
+        return curr;
+    }
+    else
+    {
+        cout << "Value found " << curr->data << "\n";
+        return curr;
+    }
+}
+
 int main()
 {
+    int choice;
+    bool flag = true;
+    while (flag)
+    {
+        cout << "Enter =>  1 to Insert , 2 to Display Tree Structure , 3 To Display, 4 To Search , 5 to Exit : \n";
+        cin >> choice;
+
+        if (choice == 1)
+        {
+            int value;
+            cout << "Enter value to insert \n";
+            cin >> value;
+
+            treeHead = insertAVL(treeHead, value);
+        }
+        else if (choice == 2)
+        {
+            displayTree(treeHead);
+        }
+        else if (choice == 3)
+        {
+            int value;
+            cout << "Which Traversal you want ";
+            cout << "Enter 1 For PreOrder, 2 For InOrder, 3 For PostOrder \n";
+            cin >> value;
+
+            if (value == 1)
+            {
+                PreOrder_Traversal(treeHead);
+            }
+            else if (value == 2)
+            {
+                InOrder_Traversal(treeHead);
+            }
+            else if (value == 3)
+            {
+                PostOrder_Traversal(treeHead);
+            }
+            else
+            {
+                cout << "Invalid Command \n";
+            }
+        }
+        else if (choice == 4)
+        {
+            int value;
+            cout << "Search => ";
+            cin >> value;
+            search(treeHead, value);
+        }
+        else if (choice == 5)
+        {
+            flag = false;
+            cout << "Program Exits ... ! ";
+        }
+        else
+        {
+            cout << "Invalid command ";
+        }
+    }
 }
