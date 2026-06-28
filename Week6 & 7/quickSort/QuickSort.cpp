@@ -6,6 +6,8 @@ using namespace std;
 // int arr[] = {77, 82, 11, 54, 76, 57, 25, 98, 59, 101, 89, 77, 45};
 int arr[] = {82, 15, 6, 93, 44, 71, 30, 58, 22, 67};
 
+// in oneGo the pivot is set and the element left to it are smaller then pivot and right ones are greater to the pivot
+
 int set_pivot(int L, int R)
 {
     int piv_ind = (L + R) / 2;
