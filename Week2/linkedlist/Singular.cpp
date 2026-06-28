@@ -107,7 +107,7 @@ void recursiveSearch(Node *curr, int value) // recursive search
         return;
     }
 
-    search(curr->next, value);
+    recursiveSearch(curr->next, value);
 }
 
 void search()
