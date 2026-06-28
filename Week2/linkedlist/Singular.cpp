@@ -93,6 +93,23 @@ void insert(int value)
         curr->next = temp;
     }
 }
+
+void recursiveSearch(Node *curr, int value) // recursive search
+{
+    if (curr == NULL)
+    {
+        cout << "Value not found";
+        return;
+    }
+    if (curr->data == value)
+    {
+        cout << "Found " << curr->data;
+        return;
+    }
+
+    search(curr->next, value);
+}
+
 void search()
 {
     bool valid = true;
