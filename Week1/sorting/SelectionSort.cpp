@@ -21,16 +21,16 @@ void sortArray(int arr[])
             }
             else
             {
-                k = arr[i];
-                l = i;
+                k = arr[i]; // stores the value
+                l = i;      // stores the index of the smallest element
                 flag = true;
                 i++;
             }
         }
         if (flag)
         {
-            int temp = arr[j];
-            arr[j] = k;
+            int temp = arr[j]; // swapping
+            arr[j] = k;        // with the element of the current to the smallest .
             arr[l] = temp;
         }
         // arr[j] = temp;
