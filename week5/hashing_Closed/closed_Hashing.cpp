@@ -47,6 +47,54 @@ void insert(int value)
     }
 }
 
+void search(int value)
+{
+    int ind = value % siz;
+    if (hashs[ind] == value)
+    {
+        cout << "Value Found " << value << "\n";
+        return;
+    }
+    int i = 1;
+    while (i < siz)
+    {
+        int idx = (value % siz) + (i * i);
+        if (hashs[idx] == value)
+        {
+            cout << "Value Found " << value << "\n";
+            return;
+        }
+        i++;
+    }
+
+    cout << "Value not Found \n";
+}
+
+void delet(int value)
+{
+    int ind = value % siz;
+    if (hashs[ind] == value)
+    {
+        cout << value << "Value Deleted Successfully";
+        hashs[ind] = -1;
+        return;
+    }
+    int i = 1;
+    while (i < siz)
+    {
+        int idx = (value % siz) + i;
+        if (hashs[idx] == value)
+        {
+            cout << value << "Value Deleted Successfully";
+            hashs[idx] = -1;
+            return;
+        }
+        i++;
+    }
+
+    cout<<"Value Not Found ";
+}
+
 int main()
 {
     bool flag = true;
@@ -65,10 +113,13 @@ int main()
             cin >> value;
             insert(value);
         }
-        // else if (input == 2)
-        // {
-
-        // }
+        else if (input == 2)
+        {
+            int value;
+            cout << "Enter Value to search" << endl;
+            cin >> value;
+            search(value);
+        }
         else if (input == 3)
         {
             flag = false;
