@@ -110,6 +110,19 @@ void recursiveSearch(Node *curr, int value) // recursive search
     recursiveSearch(curr->next, value);
 }
 
+// backward printing
+void backwardDisplay(Node *curr)
+{
+    if (curr == nullptr)
+    {
+        return;
+    }
+
+    backwardDisplay(curr->next);
+
+    cout << curr->data << "\n";
+}
+
 void search()
 {
     bool valid = true;
@@ -213,11 +226,29 @@ int main()
         }
         else if (input == 2)
         {
-            display();
+            int choice;
+            cout << "Enter => 1 for display forward, 2 For Backward Display ";
+            cin >> choice;
+            if (choice == 1)
+            {
+                display();
+            }
+            else if (choice == 2)
+            {
+                backwardDisplay(list);
+            }
+            else
+            {
+                cout << "Invalid Command ...  ! \n";
+            }
         }
         else if (input == 3)
         {
-            search();
+            int value;
+            cout << "Enter value to Search ";
+            cin >> value;
+            recursiveSearch(list, value);
+            // search();
         }
         else if (input == 4)
         {

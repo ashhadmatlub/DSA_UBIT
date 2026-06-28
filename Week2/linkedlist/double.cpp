@@ -49,7 +49,7 @@ void delet()
     cout << "Enter Value to delete: ";
     cin >> value;
     Node *cur = list;
-    if (value = cur->data)
+    if (value == cur->data)
     {
         list = list->next;
         curr = list;
