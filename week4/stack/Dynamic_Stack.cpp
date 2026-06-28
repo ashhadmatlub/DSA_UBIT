@@ -33,27 +33,27 @@ void push(int value)
     curr->next = temp;
 }
 
-int pop()
+int pop(Node *curr)
 {
-    if (stack == NULL)
+    if (curr == NULL)
     {
         cout << "Stack underflow ";
         return -1;
     }
-    Node *curr = stack;
-    Node *prev = NULL;
-    while (curr ->next!= NULL)
-    {
-        prev = curr;
-        curr = curr->next;
-    }
 
-    Node *del = curr;
-    int value = curr->data;
-    prev = curr;
-    free(del);
-    // temp = NULL;
-    return value;
+    pop(curr->next);
+
+    int count;
+    count++;
+    if (count == 1)
+    {
+        return curr->data;
+        delete (curr);
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 int main()
@@ -76,7 +76,7 @@ int main()
         else if (input == 2)
         {
             int value;
-            value = pop();
+            value = pop(stack);
             cout << value << "\n";
         }
         else if (input == 3)

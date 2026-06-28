@@ -4,7 +4,7 @@
 
 using namespace std;
 
-// seprate chaining
+// seprate chaining , open hashing , time complexity , empty spaces issue like there would be several empty spaces but we still add in the same block
 struct MultiNode
 {
     int data;
@@ -56,12 +56,12 @@ void del(int value) // done
 {
     int ind = value % 10; // % size
     bool flag = false;
-    if (HT[ind].flag == false)
+    if (HT[ind].flag == false) // the element is not in the list
     {
         cout << "Value doesn't exist\n";
         return;
     }
-    if (HT[ind].data == value) // to delete the array item / override
+    if (HT[ind].data == value) // to delete the array item / override which means the first element
     {
         if (HT[ind].next == NULL)
         {
@@ -90,12 +90,28 @@ void del(int value) // done
             // return;
         }
     }
-    if (HT[ind].next->data == value) // to delete head of the list
+    if (HT[ind].next != NULL)
     {
-        MultiNode *temp = HT[ind].next;
-        HT[ind].next = HT[ind].next->next; // so the list head pointer changes
-        cout << temp->data << " Deleted Successfully\n";
-        delete (temp);
+
+        if (HT[ind].next->data == value) // to delete head of the list , which is the second element
+        {
+            MultiNode *temp = HT[ind].next;
+            if (HT[ind].next->next != NULL)
+            {
+                HT[ind].next = HT[ind].next->next; // so the list head pointer changes
+            }
+            else
+            {
+                HT[ind].next = NULL;
+            }
+            cout << temp->data << " Deleted Successfully\n";
+            delete (temp);
+            return;
+        }
+    }
+    else
+    {
+        cout << "Value doesn't exist\n";
         return;
     }
 
@@ -116,6 +132,7 @@ void del(int value) // done
                 curr = prev;
             flag = true;
             free(temp);
+            break;
         }
         curr = curr->next;
         prev = prev->next;
