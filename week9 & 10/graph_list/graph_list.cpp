@@ -30,7 +30,7 @@ void addVertex(Vertex *&curr, int data)
     if (curr == NULL)
     {
         Vertex *point = Graph; // constraints so the same vertex will not be entered twice
-        while (point != NULL)
+        while (point != NULL)  // stoping duplicates to enter.
         {
             if (point->data == data)
             {
@@ -51,7 +51,7 @@ void addVertex(Vertex *&curr, int data)
         curr = temp;
         return;
     }
-    addVertex(curr->next, data);
+    addVertex(curr->next, data); // to go through the end of the list to add the new element in it
 }
 
 void display()
@@ -97,7 +97,14 @@ void removeVertex(int data)
         if (Graph->edgeList != NULL)
             removeAllEdge(Graph->data); // this will remove the vertex address from other vertice list
         // like if we delete  v1 so we check whether v1 is the outgoing vertice of any other if yes then delete them also
-        Graph = Graph->next;
+        if (Graph->next != NULL)
+        {
+            Graph = Graph->next;
+        }
+        else
+        {
+            Graph = nullptr;
+        }
         delete (temp);
         cout << "Vertex " << data << " Deleted Successfully\n";
         return;
@@ -272,7 +279,7 @@ void removeAllEdge(int v1)
             }
         }
 
-        temp = temp->next;
+        temp = temp->next; // it is traversing in the graph list (single list ) not in the multilist.
     }
 }
 
@@ -318,13 +325,13 @@ int outDegree(int v1) // find inDegree, which means tells how many vertex initia
     Edge *edgeCurr;
     bool flag = false;
     int count = 0;
-    while (temp != NULL)
+    while (temp != NULL) // this will give us the address of the vertex of which we have to find the outdegree .
     {
         if (temp->data == v1)
         {
             edgeCurr = temp->edgeList;
             flag = true;
-            if (edgeCurr == NULL)
+            if (edgeCurr == NULL) // if edge list null then there is no outgoing edges so return 0 ;
             {
                 return count;
             }
@@ -612,7 +619,6 @@ bool isCycle(Vertex *v1, Vertex *v2, int count, int vertice)
     }
     return false;
 }
-
 
 int main()
 {
