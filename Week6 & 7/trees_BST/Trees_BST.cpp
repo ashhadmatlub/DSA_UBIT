@@ -39,6 +39,16 @@ Node *insert(Node *curr, int value)
     return curr;
 }
 
+// to find the minimum node
+Node *minNode(Node *curr)
+{
+    while (curr->left != NULL)
+    {
+        curr = curr->left;
+    }
+    return curr;
+}
+
 void display_Pre_Order(Node *curr)
 {
     if (curr != NULL)
@@ -111,24 +121,34 @@ Node *deleteNode(Node *curr, int value)
     if (value > curr->data)
     {
         curr->right = deleteNode(curr->right, value);
-        return curr;
     }
     if (value < curr->data)
     {
         curr->left = deleteNode(curr->left, value);
-        return curr;
-    }
-}
-
-// to find the minimum node
-
-Node *minNode(Node *curr)
-{
-    while (curr->left != NULL)
-    {
-        curr = curr->left;
     }
     return curr;
+}
+
+void search(Node *curr, int value)
+{
+    if (curr == nullptr)
+    {
+        cout << "Value not Found";
+    }
+
+    if (value > curr->data)
+    {
+        search(curr->right, value);
+    }
+    else if (value < curr->data)
+    {
+        search(curr->left, value);
+    }
+    else
+    {
+        cout << "Value Found " << curr->data << "\n";
+        return;
+    }
 }
 
 int main()
@@ -137,7 +157,7 @@ int main()
     int input, value;
     while (flag)
     {
-        cout << " 1 : For Insert , 2 : For Display , 3 : To Delete , 4 : For Exit \n";
+        cout << " 1 : For Insert , 2 : For Display , 3 : To Delete , 4 : To Search , 5 : For Exit \n";
         cin >> input;
         if (input == 1)
         {
@@ -174,6 +194,13 @@ int main()
             deleteNode(Root, value);
         }
         else if (input == 4)
+        {
+            int value;
+            cout << "Enter value to Search ";
+            cin >> value;
+            search(Root, value);
+        }
+        else if (input == 5)
         {
             flag = false;
         }
