@@ -604,6 +604,21 @@ bool isConnected(Vertex *v1, Vertex *v2, int totalVertices, int count, int total
     }
 }
 
+// void BFS()
+// {
+// Vertex *start = Graph;
+// start->flag = true;
+// enque (start);
+// while(queue != null ){
+// Vertex *v = dequee();
+// coutt << v - data;
+// Edge e = v - edgelist ;
+// while ( e != null ){
+// e - v - flag true ;
+// enque ( e - v )
+// e = e -> next }
+// }
+
 bool isCycle(Vertex *v1, Vertex *v2, int count, int vertice)
 {
     count++;
