@@ -32,7 +32,7 @@ void plot_Graph(int value, int (*arr)[maxx])
         } while (suc > value);
         int arr1[suc];
         j = 0;
-        while (j < suc) // to ask from the user how many successors are there/ means which nodes are been pointed by this node .
+        while (j < suc) // to ask from the user how many successors are there/ means which nodes are been pointed by this node
         {
             cout << "Enter successor(the current vertices pointing towards) of vertice : " << (i + 1) << " : ";
             cin >> suc_Value;
@@ -161,6 +161,7 @@ int neighbour(int (*arr)[maxx], int vertex, int idx, int totalVertices)
     }
     return count;
 }
+
 int main()
 {
     int input, vertices;

@@ -71,7 +71,7 @@ void downHeapify(int arra[], int ind, int sizee)
 {
     // bool flag1 = true;
     // bool flag2 = true;
-    int child1 = (2 * ind) + 1; // this formula would tell the node of it child elements .
+    int child1 = (2 * ind) + 1; // this formula would tell the node/index of it child elements .
     int child2 = (2 * ind) + 2;
 
     // --------- ind = parent ; size = size of an array;
