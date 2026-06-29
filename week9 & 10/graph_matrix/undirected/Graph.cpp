@@ -27,12 +27,12 @@ void plot_Graph(int value, int (*arr)[maxx])
         do // i did this because , vertices successors must be <= no.of vertices
         {
             cout << "Vertices successors must be <= no.of vertices \n";
-            cout << "How many successors are of vertice ? : " << (i + 1) << " : ";
+            cout << "How many successors are of vertice ? : " << (i + 1) << " : "; // means tell the number of node is been pointed by this node .
             cin >> suc;
         } while (suc > value);
         int arr1[suc];
         j = 0;
-        while (j < suc) // to ask from the user how many successors are there
+        while (j < suc) // to ask from the user how many successors are there/ means which nodes are been pointed by this node .
         {
             cout << "Enter successor(the current vertices pointing towards) of vertice : " << (i + 1) << " : ";
             cin >> suc_Value;

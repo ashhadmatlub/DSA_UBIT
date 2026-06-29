@@ -255,15 +255,13 @@ AVLNode *del(AVLNode *curr, int value) // left
         {
             delete (curr);
             cout << "Value Deleted successfully \n";
-            return curr;
         }
-        if (curr->right == nullptr)
+        else if (curr->right == nullptr)
         {
             AVLNode *temp = curr;
             curr = curr->left;
             delete (temp);
             cout << "Value Deleted successfully \n";
-            return curr;
         }
         else
         {

@@ -26,7 +26,7 @@ int levelFinder()
 // here i made swaping function because we need it in several places
 void swap(int &greater, int &smaller)
 // One of the most IMP  ( & operator )
-// here i used the &operator so it pass by refrence now the change would be made inside an actual array not in the copy which is been made by me.
+// here i used the &operator so it pass by refrence now the change would be made inside an actual array not in just between these two elements which remains inside this functions.
 {
     int temp = greater;
     greater = smaller;
@@ -38,11 +38,11 @@ void upHeapify(int arr[], int index)
 {
     if (index == 0)
         return;
-    int parent = (index - 1) / 2;
-    if (arr[index] > arr[parent])
+    int parent = (index - 1) / 2; //  by using this formula we got the parent node of this child
+    if (arr[index] > arr[parent]) // and then we compare the parent with child if the child is greater then we swap it with parent, as it neccessary that the parent must be the greater then all its child elements in MaxHeap. (vice versa in min Heap).
     {
         swap(arr[index], arr[parent]);
-        upHeapify(arr, parent);
+        upHeapify(arr, parent); // here we pass it again so it would check through the head or root of the tree, and if the parent node we send would be zero then it means that it has no parents so then we would stop.
     }
     return;
 }
@@ -60,10 +60,10 @@ void insert(int value)
     siz++;
     if (siz > 1)
     {
-        upHeapify(arrayy, i);
+        upHeapify(arrayy, i); // to maintain the maxHeap concept we would do this.
     }
     i++;
-    lvl = levelFinder();
+    lvl = levelFinder(); // calcuating it for the tree display ;
 }
 
 // We use DownHeapify Function to delete values in Heap
@@ -71,38 +71,40 @@ void downHeapify(int arra[], int ind, int sizee)
 {
     // bool flag1 = true;
     // bool flag2 = true;
-    int child1 = (2 * ind) + 1;
+    int child1 = (2 * ind) + 1; // this formula would tell the node of it child elements .
     int child2 = (2 * ind) + 2;
+
+    // --------- ind = parent ; size = size of an array;
 
     if (child1 < sizee) // left child check ( exists or not )
     {
         if (child2 < sizee) // // right child check ( exists or not )
         {
-            if (arra[ind] < arra[child1] && arra[ind] > arra[child2])
+            if (arra[ind] < arra[child1] && arra[ind] > arra[child2]) // if the parent is smaller then child1 and greater then child 2 so swap it with child 1 ;
             {
                 swap(arra[child1], arra[ind]);
                 downHeapify(arra, child1, sizee);
             }
-            if (arra[ind] > arra[child1] && arra[ind] < arra[child2])
+            if (arra[ind] > arra[child1] && arra[ind] < arra[child2]) // if the parent is smaller then child 2 and greater then child 1 so swap it with child 2 ;
             {
                 swap(arra[child2], arra[ind]);
                 downHeapify(arra, child2, sizee);
             }
-            if (arra[ind] < arra[child1] && arra[ind] < arra[child2])
+            if (arra[ind] < arra[child1] && arra[ind] < arra[child2]) // if the parent is smaller then both child then swap it with the greater child
             {
-                if (arra[child1] < arra[child2])
+                if (arra[child1] < arra[child2]) // child 2 greater swap it with parent
                 {
                     swap(arra[child2], arra[ind]);
                     downHeapify(arra, child2, sizee);
                 }
-                if (arra[child1] > arra[child2])
+                if (arra[child1] > arra[child2]) // child 1 greater swap it with parent
                 {
                     swap(arra[child1], arra[ind]);
                     downHeapify(arra, child1, sizee);
                 }
             }
         }
-        if (arra[ind] < arra[child1])
+        if (arra[ind] < arra[child1]) // means second child doesn't exist ; and child 1 is greater then it parent;
         {
 
             swap(arra[child1], arra[ind]);
@@ -236,7 +238,7 @@ int main()
         else if (input == 5)
         {
             flag = false;
-            cout << "Program Exits ";
+            cout << "Program Exits ... ! ";
         }
     }
 }
