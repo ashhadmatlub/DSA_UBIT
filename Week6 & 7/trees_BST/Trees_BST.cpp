@@ -88,9 +88,16 @@ Node *deleteNode(Node *curr, int value)
         {
             Node *temp;
             temp = (Node *)malloc(sizeof(Node));
+            temp = curr->right;
+            delete (curr);
+            return temp;
         }
         if (curr->right == NULL)
         {
+            Node *temp = new Node;
+            temp = curr->left;
+            delete (curr);
+            return temp;
         }
         // for two childs
         Node *temp;
