@@ -617,6 +617,12 @@ bool isConnected(Vertex *v1, Vertex *v2, int totalVertices, int count, int total
 // e - v - flag true ;
 // enque ( e - v )
 // e = e -> next }
+
+// while ( start - > flag == true ){
+// count ++ ; }
+
+// if (count == no.of vertice ){
+// return true } // means it tells that the graph is connected ;
 // }
 
 bool isCycle(Vertex *v1, Vertex *v2, int count, int vertice)
