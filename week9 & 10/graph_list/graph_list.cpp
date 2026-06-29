@@ -396,7 +396,7 @@ bool isAdjacent(int v1, int v2, bool flag)
     }
     if (!flag)
     {
-        return isAdjacent(v2, v1, true);
+        return isAdjacent(v2, v1, true); // if v1 to v2 shows null then we recursivly do this and send v2 inPlace of v1 and v1 inPlace of v2.
     }
     return false;
 }
@@ -429,6 +429,8 @@ void neighbour(int v1)
     }
 
     temp = Graph; // for outDegree Neighbours / initial / outgoing edges
+    // here i haven't included the edge case in which if the line is going from v1 to v2 and vice-versa so it will count as 2 times like the same neighbour will be displayed two times
+    // i'll work on it by implementing a check that if the neighbour is counted and once then it wouldn't be count twice.
     Edge *edgePointer = edgeCurr;
     cout << "Neighbours of Vertex " << v1 << " are => : ";
     while (temp != NULL)
